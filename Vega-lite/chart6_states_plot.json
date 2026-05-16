@@ -12,7 +12,7 @@
     "subtitleColor": "#666"
   },
 
-  "width": 760,
+  "width": 700,
   "height": 360,
 
   "data": {
@@ -21,9 +21,18 @@
   },
 
   "transform": [
-    {"calculate": "toNumber(datum.trips_2024)", "as": "trips_2024_num"},
-    {"calculate": "toNumber(datum.trips_2025)", "as": "trips_2025_num"},
-    {"calculate": "datum.trips_2025_num - datum.trips_2024_num", "as": "change"}
+    {
+      "calculate": "toNumber(datum.trips_2024)",
+      "as": "trips_2024_num"
+    },
+    {
+      "calculate": "toNumber(datum.trips_2025)",
+      "as": "trips_2025_num"
+    },
+    {
+      "calculate": "datum.trips_2025_num - datum.trips_2024_num",
+      "as": "change"
+    }
   ],
 
   "layer": [
@@ -37,7 +46,10 @@
         "y": {
           "field": "state_abbr",
           "type": "nominal",
-          "sort": {"field": "trips_2025_num", "order": "descending"},
+          "sort": {
+            "field": "trips_2025_num",
+            "order": "descending"
+          },
           "title": null,
           "axis": {
             "labelFontSize": 13,
@@ -62,6 +74,12 @@
     },
 
     {
+      "transform": [
+        {
+          "calculate": "'2024'",
+          "as": "year"
+        }
+      ],
       "mark": {
         "type": "point",
         "filled": true,
@@ -73,7 +91,10 @@
         "y": {
           "field": "state_abbr",
           "type": "nominal",
-          "sort": {"field": "trips_2025_num", "order": "descending"},
+          "sort": {
+            "field": "trips_2025_num",
+            "order": "descending"
+          },
           "title": null
         },
         "x": {
@@ -81,16 +102,42 @@
           "type": "quantitative"
         },
         "color": {
-          "value": "#9ecae1"
+          "field": "year",
+          "type": "nominal",
+          "title": "Year",
+          "scale": {
+            "domain": ["2024", "2025"],
+            "range": ["#9ecae1", "#1a4a6b"]
+          },
+          "legend": {
+            "orient": "right",
+            "titleFontSize": 12,
+            "labelFontSize": 11
+          }
         },
         "tooltip": [
-          {"field": "state", "type": "nominal", "title": "State"},
-          {"field": "trips_2024_num", "type": "quantitative", "title": "Arrivals 2024", "format": ",.1f"}
+          {
+            "field": "state",
+            "type": "nominal",
+            "title": "State"
+          },
+          {
+            "field": "trips_2024_num",
+            "type": "quantitative",
+            "title": "Arrivals 2024",
+            "format": ",.1f"
+          }
         ]
       }
     },
 
     {
+      "transform": [
+        {
+          "calculate": "'2025'",
+          "as": "year"
+        }
+      ],
       "mark": {
         "type": "point",
         "filled": true,
@@ -102,7 +149,10 @@
         "y": {
           "field": "state_abbr",
           "type": "nominal",
-          "sort": {"field": "trips_2025_num", "order": "descending"},
+          "sort": {
+            "field": "trips_2025_num",
+            "order": "descending"
+          },
           "title": null
         },
         "x": {
@@ -110,12 +160,32 @@
           "type": "quantitative"
         },
         "color": {
-          "value": "#1a4a6b"
+          "field": "year",
+          "type": "nominal",
+          "title": "Year",
+          "scale": {
+            "domain": ["2024", "2025"],
+            "range": ["#9ecae1", "#1a4a6b"]
+          }
         },
         "tooltip": [
-          {"field": "state", "type": "nominal", "title": "State"},
-          {"field": "trips_2025_num", "type": "quantitative", "title": "Arrivals 2025", "format": ",.1f"},
-          {"field": "change", "type": "quantitative", "title": "Increase from 2024", "format": ",.1f"}
+          {
+            "field": "state",
+            "type": "nominal",
+            "title": "State"
+          },
+          {
+            "field": "trips_2025_num",
+            "type": "quantitative",
+            "title": "Arrivals 2025",
+            "format": ",.1f"
+          },
+          {
+            "field": "change",
+            "type": "quantitative",
+            "title": "Increase from 2024",
+            "format": ",.1f"
+          }
         ]
       }
     },
@@ -132,7 +202,10 @@
         "y": {
           "field": "state_abbr",
           "type": "nominal",
-          "sort": {"field": "trips_2025_num", "order": "descending"},
+          "sort": {
+            "field": "trips_2025_num",
+            "order": "descending"
+          },
           "title": null
         },
         "x": {
