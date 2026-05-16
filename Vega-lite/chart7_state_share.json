@@ -1,1 +1,91 @@
-
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "State Share of International Arrivals: 2015, 2019 and 2025",
+    "fontSize": 16,
+    "font": "Georgia",
+    "anchor": "start",
+    "color": "#1a4a6b",
+    "subtitle": "NSW and VIC have maintained dominance while QLD has steadily grown its share",
+    "subtitleFontSize": 13,
+    "subtitleColor": "#666"
+  },
+  "width": 700,
+  "height": 380,
+  "data": {
+    "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/state_trend.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"filter": "datum.year == 2015 || datum.year == 2019 || datum.year == 2025"},
+    {"calculate": "toNumber(datum.NSW)", "as": "NSW_num"},
+    {"calculate": "toNumber(datum.VIC)", "as": "VIC_num"},
+    {"calculate": "toNumber(datum.QLD)", "as": "QLD_num"},
+    {"calculate": "toNumber(datum.WA)",  "as": "WA_num"},
+    {"calculate": "toNumber(datum.SA)",  "as": "SA_num"},
+    {"calculate": "toNumber(datum.TAS)", "as": "TAS_num"},
+    {"calculate": "toNumber(datum.NT)",  "as": "NT_num"},
+    {"calculate": "toNumber(datum.ACT)", "as": "ACT_num"},
+    {"calculate": "toNumber(datum.total)", "as": "total_num"},
+    {"calculate": "datum.NSW_num / datum.total_num * 100", "as": "NSW_pct"},
+    {"calculate": "datum.VIC_num / datum.total_num * 100", "as": "VIC_pct"},
+    {"calculate": "datum.QLD_num / datum.total_num * 100", "as": "QLD_pct"},
+    {"calculate": "datum.WA_num  / datum.total_num * 100", "as": "WA_pct"},
+    {"calculate": "datum.SA_num  / datum.total_num * 100", "as": "SA_pct"},
+    {"calculate": "datum.TAS_num / datum.total_num * 100", "as": "TAS_pct"},
+    {"calculate": "datum.NT_num  / datum.total_num * 100", "as": "NT_pct"},
+    {"calculate": "datum.ACT_num / datum.total_num * 100", "as": "ACT_pct"},
+    {
+      "fold": ["NSW_pct","VIC_pct","QLD_pct","WA_pct","SA_pct","TAS_pct","NT_pct","ACT_pct"],
+      "as": ["state_key", "share"]
+    },
+    {
+      "calculate": "replace(datum.state_key, '_pct', '')",
+      "as": "state"
+    },
+    {
+      "calculate": "toString(datum.year)",
+      "as": "year_label"
+    }
+  ],
+  "mark": {"type": "bar"},
+  "encoding": {
+    "x": {
+      "field": "state",
+      "type": "nominal",
+      "title": "State",
+      "axis": {"labelFontSize": 12, "titleFontSize": 13},
+      "sort": ["NSW","VIC","QLD","WA","SA","TAS","ACT","NT"]
+    },
+    "y": {
+      "field": "share",
+      "type": "quantitative",
+      "title": "Share of Total Arrivals (%)",
+      "axis": {"titleFontSize": 13, "labelFontSize": 12}
+    },
+    "color": {
+      "field": "year_label",
+      "type": "nominal",
+      "title": "Year",
+      "scale": {
+        "domain": ["2015", "2019", "2025"],
+        "range": ["#6db3d4", "#e8703a", "#1a4a6b"]
+      },
+      "legend": {
+        "titleFontSize": 12,
+        "labelFontSize": 12,
+        "orient": "top-right"
+      }
+    },
+    "xOffset": {
+      "field": "year_label",
+      "type": "nominal",
+      "sort": ["2015", "2019", "2025"]
+    },
+    "tooltip": [
+      {"field": "state", "type": "nominal", "title": "State"},
+      {"field": "year_label", "type": "nominal", "title": "Year"},
+      {"field": "share", "type": "quantitative", "title": "Share (%)", "format": ".1f"}
+    ]
+  }
+}
