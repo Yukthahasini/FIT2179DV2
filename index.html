@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
     <style>
+
         body {
             margin: 0;
             font-family: Georgia, serif;
@@ -104,105 +105,232 @@
             grid-template-columns: 1fr 1fr;
             gap: 28px;
         }
+
+        .placeholder {
+            border: 2px dashed #cfc7bc;
+            border-radius: 10px;
+            padding: 55px 20px;
+            text-align: center;
+            color: #777;
+            font-style: italic;
+            background-color: #faf7f1;
+        }
+
     </style>
+
 </head>
 
 <body>
 
-<div class="page">
+    <div class="page">
 
-    <h1>Australia's International Tourism</h1>
+        <h1>Australia's International Tourism</h1>
 
-    <p class="subtitle">
-        Who visits, where they go, and what they spend.
-    </p>
+        <p class="subtitle">
+            Who visits, where they go, and what they spend.
+        </p>
 
-    <p class="intro-text">
-        International tourism plays an important role in Australia’s economy, cities, and regional communities.
-        This visualisation explores visitor arrivals, travel purposes, state destinations, and spending patterns
-        to show how tourism shapes Australia in 2025.
-    </p>
+        <p class="intro-text">
+            International tourism plays an important role in Australia’s economy, cities, and regional communities.
+            This visualisation explores visitor arrivals, travel purposes, state destinations, and spending patterns
+            to show how tourism shapes Australia in 2025.
+        </p>
 
-    <!-- SECTION 1 -->
-    <section class="section">
-        <h2 class="section-title"> The Big Picture</h2>
+        <!-- SECTION 1 -->
+        <section class="section">
 
-        <div class="kpi-grid">
-            <div class="kpi-card">
-                <h3>8.9M</h3>
-                <p>International visitors</p>
-            </div>
+            <h2 class="section-title">The Big Picture</h2>
 
-            <div class="kpi-card">
-                <h3>$39.2B</h3>
-                <p>Total visitor spend</p>
-            </div>
+            <div class="kpi-grid">
 
-            <div class="kpi-card">
-                <h3>2.9%</h3>
-                <p>Contribution to GDP</p>
-            </div>
-        </div>
+                <div class="kpi-card">
+                    <h3>8.9M</h3>
+                    <p>International visitors</p>
+                </div>
 
-        <div class="chart-container">
-            <div id="chart1"></div>
-            <p class="chart-note">
-                Travel purposes show different long-term patterns, with holiday, visiting friends and relatives,
-                business and education all contributing to Australia’s international visitor mix.
-            </p>
-        </div>
-    </section>
+                <div class="kpi-card">
+                    <h3>$39.2B</h3>
+                    <p>Total visitor spend</p>
+                </div>
 
-    <!-- SECTION 2 -->
-    <section class="section">
-        <h2 class="section-title"> Who’s Coming?</h2>
+                <div class="kpi-card">
+                    <h3>2.9%</h3>
+                    <p>Contribution to GDP</p>
+                </div>
 
-        <div class="chart-container">
-            <div id="chart2"></div>
-            <p class="chart-note">
-                New Zealand remains Australia’s largest source of international visitors in 2025, followed by China,
-                the United Kingdom and the United States.
-            </p>
-        </div>
-
-        <div class="two-column">
-            <div class="chart-container">
-                <div id="chart3"></div>
-                <p class="chart-note">
-                    Reasons for travel reveal the different motivations behind visits to Australia.
-                </p>
             </div>
 
             <div class="chart-container">
-                <div id="chart4"></div>
+
+                <div id="chart1"></div>
+
                 <p class="chart-note">
-                    Duration of stay helps show whether visitors are making short trips or staying for longer periods.
+                    Travel purposes show different long-term patterns, with holiday, visiting friends and relatives,
+                    business and education all contributing to Australia’s international visitor mix.
                 </p>
+
             </div>
-        </div>
-    </section>
 
-    <!-- SECTION 3 -->
-    <section class="section">
-        <h2 class="section-title"> Where Do They Go?</h2>
+        </section>
 
-        <div class="chart-container">
-            <div id="chart6"></div>
-            <p class="chart-note">
-                State-level arrivals show which parts of Australia attract the largest share of international visitors.
-            </p>
-        </div>
-    </section>
+        <!-- SECTION 2 -->
+        <section class="section">
 
-</div>
+            <h2 class="section-title">Who’s Coming?</h2>
 
-<script>
-    vegaEmbed("#chart1", "Vega-lite/chart1_arrivals_purpose.json", { actions: false });
-    vegaEmbed("#chart2", "Vega-lite/chart2_countries.json", { actions: false });
-    vegaEmbed("#chart3", "Vega-lite/chart3_purpose_donut.json", { actions: false });
-    vegaEmbed("#chart4", "Vega-lite/chart4_duration.json", { actions: false });
-    vegaEmbed("#chart6", "Vega-lite/chart6_states_bar.json", { actions: false });
-</script>
+            <div class="chart-container">
+
+                <div id="chart2"></div>
+
+                <p class="chart-note">
+                    New Zealand remains Australia’s largest source of international visitors in 2025, followed by China,
+                    the United Kingdom and the United States.
+                </p>
+
+            </div>
+
+            <div class="two-column">
+
+                <div class="chart-container">
+
+                    <div id="chart3"></div>
+
+                    <p class="chart-note">
+                        Reasons for travel reveal the different motivations behind visits to Australia.
+                    </p>
+
+                </div>
+
+                <div class="chart-container">
+
+                    <div id="chart4"></div>
+
+                    <p class="chart-note">
+                        Duration of stay helps show whether visitors are making short trips or staying for longer periods.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- SECTION 3 -->
+        <section class="section">
+
+            <h2 class="section-title">Where Do They Go?</h2>
+
+            <div class="chart-container">
+
+                <div class="placeholder">
+                    Chart 5 will go here: Choropleth map of arrivals by state.
+                </div>
+
+                <p class="chart-note">
+                    The map will show how international visitors are distributed across Australian states and territories.
+                </p>
+
+            </div>
+
+            <div class="chart-container">
+
+                <div id="chart6"></div>
+
+                <p class="chart-note">
+                    The connected dot plot compares 2024 and 2025 arrivals for each state, making year-on-year change easier to see.
+                </p>
+
+            </div>
+
+            <div class="chart-container">
+
+                <div class="placeholder">
+                    Chart 7 will go here: State share comparison across selected years.
+                </div>
+
+                <p class="chart-note">
+                    This chart will show how each state’s share of international arrivals has changed over time.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- SECTION 4 -->
+        <section class="section">
+
+            <h2 class="section-title">What Do They Spend?</h2>
+
+            <div class="chart-container">
+
+                <div class="placeholder">
+                    Chart 8 will go here: Visitor spend by purpose, 2015–2025.
+                </div>
+
+                <p class="chart-note">
+                    Spending by purpose helps show which types of visitors contribute most to Australia’s tourism economy.
+                </p>
+
+            </div>
+
+            <div class="chart-container">
+
+                <div class="placeholder">
+                    Chart 9 will go here: Total arrivals versus total spend.
+                </div>
+
+                <p class="chart-note">
+                    Comparing arrivals and spending shows whether visitor numbers and economic value move together.
+                </p>
+
+            </div>
+
+            <div class="two-column">
+
+                <div class="chart-container">
+
+                    <div class="placeholder">
+                        Chart 10 will go here: Total annual arrivals, 2015–2025.
+                    </div>
+
+                    <p class="chart-note">
+                        This chart will summarise the overall long-term trend in international arrivals.
+                    </p>
+
+                </div>
+
+                <div class="chart-container">
+
+                    <div class="placeholder">
+                        Chart 11 will go here: Spend per trip by top countries.
+                    </div>
+
+                    <p class="chart-note">
+                        Spend per trip highlights which visitor markets provide the highest value per journey.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <script>
+
+        vegaEmbed("#chart1", "Vega-lite/chart1_arrivals_purpose.json", { actions: false });
+
+        vegaEmbed("#chart2", "Vega-lite/chart2_countries.json", { actions: false });
+
+        vegaEmbed("#chart3", "Vega-lite/chart3_purpose_donut.json", { actions: false });
+
+        vegaEmbed("#chart4", "Vega-lite/chart4_duration.json", { actions: false });
+
+        vegaEmbed("#chart6", "Vega-lite/chart6_states_bar.json", { actions: false });
+
+    </script>
 
 </body>
+
 </html>
