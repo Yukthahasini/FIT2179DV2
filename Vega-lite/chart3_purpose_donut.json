@@ -1,1 +1,54 @@
-
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Reason for Visiting Australia (2025)",
+    "fontSize": 16,
+    "font": "Georgia",
+    "anchor": "middle",
+    "color": "#1a4a6b",
+    "subtitle": "Holiday is the primary reason for international visits",
+    "subtitleFontSize": 13,
+    "subtitleColor": "#666"
+  },
+  "width": 320,
+  "height": 320,
+  "data": {
+    "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/purpose.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "calculate": "datum.purpose === 'Visiting friends and relatives' ? 'VFR' : datum.purpose === 'Other Reason' ? 'Other' : datum.purpose",
+      "as": "purpose_short"
+    },
+    {
+      "calculate": "toNumber(datum.trips_2025)",
+      "as": "trips"
+    }
+  ],
+  "mark": {"type": "arc", "innerRadius": 80, "outerRadius": 140},
+  "encoding": {
+    "theta": {
+      "field": "trips",
+      "type": "quantitative"
+    },
+    "color": {
+      "field": "purpose_short",
+      "type": "nominal",
+      "title": "Purpose",
+      "scale": {
+        "domain": ["Holiday", "VFR", "Business", "Education", "Employment", "Other"],
+        "range": ["#1a4a6b", "#e8703a", "#6db3d4", "#4a8a4a", "#c8bfb0", "#999"]
+      },
+      "legend": {
+        "titleFontSize": 12,
+        "labelFontSize": 12,
+        "orient": "bottom"
+      }
+    },
+    "tooltip": [
+      {"field": "purpose_short", "type": "nominal", "title": "Purpose"},
+      {"field": "trips", "type": "quantitative", "title": "Arrivals", "format": ",.1f"}
+    ]
+  }
+}
