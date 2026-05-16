@@ -1,1 +1,49 @@
-
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "How Long Do Visitors Stay? (2025)",
+    "fontSize": 16,
+    "font": "Georgia",
+    "anchor": "middle",
+    "color": "#1a4a6b",
+    "subtitle": "Most visitors stay between 1 and 2 weeks",
+    "subtitleFontSize": 13,
+    "subtitleColor": "#666"
+  },
+  "width": 320,
+  "height": 320,
+  "data": {
+    "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/duration.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "calculate": "datum.duration_band === 'under_1_week' ? 'Under 1 week' : datum.duration_band === '1_to_2_weeks' ? '1–2 weeks' : datum.duration_band === '2_weeks_to_1_month' ? '2 weeks–1 month' : datum.duration_band === '1_to_2_months' ? '1–2 months' : datum.duration_band === '2_to_3_months' ? '2–3 months' : datum.duration_band === '3_to_6_months' ? '3–6 months' : '6–12 months'",
+      "as": "duration_label"
+    },
+    {
+      "calculate": "toNumber(datum.arrivals) / 1000000",
+      "as": "arrivals_m"
+    }
+  ],
+  "mark": {"type": "bar", "cornerRadiusEnd": 4, "color": "#6db3d4"},
+  "encoding": {
+    "y": {
+      "field": "duration_label",
+      "type": "ordinal",
+      "sort": ["Under 1 wk", "1–2 wks", "2 wks– 1 mon", "1–2 mons", "2–3 mons", "3–6 mons", " +6 mons"],
+      "title": null,
+      "axis": {"labelFontSize": 11}
+    },
+    "x": {
+      "field": "arrivals_m",
+      "type": "quantitative",
+      "title": "Arrivals (Millions)",
+      "axis": {"titleFontSize": 12, "labelFontSize": 11}
+    },
+    "tooltip": [
+      {"field": "duration_label", "type": "nominal", "title": "Duration"},
+      {"field": "arrivals_m", "type": "quantitative", "title": "Arrivals (M)", "format": ".2f"}
+    ]
+  }
+}
