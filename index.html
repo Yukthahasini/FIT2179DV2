@@ -1,30 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Test</title>
+  <title>Australia's International Tourism</title>
   <script src="https://cdn.jsdelivr.net/npm/vega@5.25.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.16.3"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.22.2"></script>
+  <style>
+    body {
+      font-family: Georgia, serif;
+      background: #f5efe6;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 { color: #1a4a6b; font-size: 28px; }
+    .chart-container {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
 
-  <h1>Test Chart</h1>
-  <div id="vis"></div>
+  <h1>Australia's International Tourism</h1>
+
+  <div class="chart-container">
+    <div id="chart2"></div>
+  </div>
 
   <script>
-    vegaEmbed('#vis', {
+    vegaEmbed('#chart2', {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "data": {"values": [
-        {"x": 1, "y": 10},
-        {"x": 2, "y": 20},
-        {"x": 3, "y": 15}
-      ]},
-      "mark": "bar",
+      "title": {
+        "text": "Top Countries Visiting Australia (2025)",
+        "fontSize": 16,
+        "font": "Georgia",
+        "anchor": "start",
+        "color": "#1a4a6b"
+      },
+      "width": "container",
+      "height": 400,
+      "data": {
+        "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/countries.csv",
+        "format": {"type": "csv"}
+      },
+      "transform": [
+        {"filter": "datum.trips_2025 > 0"},
+        {
+          "window": [{"op": "rank", "as": "rank"}],
+          "sort": [{"field": "trips_2025", "order": "descending"}]
+        },
+        {"filter": "datum.rank <= 10"}
+      ],
+      "mark": {"type": "bar", "cornerRadiusEnd": 4},
       "encoding": {
-        "x": {"field": "x", "type": "ordinal"},
-        "y": {"field": "y", "type": "quantitative"}
+        "y": {
+          "field": "country",
+          "type": "nominal",
+          "sort": {"field": "trips_2025", "order": "descending"},
+          "title": null,
+          "axis": {"labelFontSize": 12}
+        },
+        "x": {
+          "field": "trips_2025",
+          "type": "quantitative",
+          "title": "Arrivals ('000)",
+          "axis": {"titleFontSize": 12, "labelFontSize": 11}
+        },
+        "color": {
+          "field": "trips_2025",
+          "type": "quantitative",
+          "scale": {"scheme": "blues"},
+          "legend": null
+        },
+        "tooltip": [
+          {"field": "country", "type": "nominal", "title": "Country"},
+          {"field": "trips_2025", "type": "quantitative", "title": "Arrivals ('000)", "format": ",.1f"},
+          {"field": "spend_2025_m", "type": "quantitative", "title": "Spend in Australia ($M)", "format": ",.0f"}
+        ]
       }
-    });
+    }, {"renderer": "svg", "actions": false});
   </script>
 
 </body>
