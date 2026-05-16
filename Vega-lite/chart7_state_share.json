@@ -61,7 +61,13 @@
       "field": "share",
       "type": "quantitative",
       "title": "Share of Total Arrivals (%)",
-      "axis": {"titleFontSize": 13, "labelFontSize": 12}
+      "scale": {
+        "domain": [0, 40]
+      },
+      "axis": {
+        "values": [0, 10, 20, 30, 40],
+        "titleFontSize": 13,
+        "labelFontSize": 12}
     },
     "color": {
       "field": "year_label",
