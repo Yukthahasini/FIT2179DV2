@@ -38,7 +38,7 @@
       "title": "Purpose",
       "scale": {
         "domain": ["Holiday", "VFR", "Business", "Education", "Employment", "Other"],
-        "range": ["#1a4a6b", "#e8703a", "#6db3d4", "#4a8a4a", "#c8bfb0", "#999"]
+        "range": ["#2f5c7a", "#d97b4d","#89b4d8","#6c9b6b","#c7b9a5","#9a9a9a"]
       },
       "legend": {
         "titleFontSize": 12,
