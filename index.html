@@ -2,9 +2,39 @@
 <html lang="en">
 <head>
   <title>Australia's International Tourism</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <style>
+    body {
+      font-family: Georgia, serif;
+      background: #f5efe6;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #1a4a6b;
+      font-size: 28px;
+    }
+    .chart-container {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
+
   <h1>Australia's International Tourism</h1>
-  <p>Visualisation coming soon.</p>
+
+  <div class="chart-container">
+    <div id="chart2"></div>
+  </div>
+
+  <script>
+    vegaEmbed('#chart2', 'vega-lite/chart2_countries.json');
+  </script>
+
 </body>
 </html>
