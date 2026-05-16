@@ -14,18 +14,18 @@
   },
   "transform": [
     {"filter": "datum.trips_2025 > 0"},
-    {"window": [{"op": "rank", "as": "rank"}], "sort": [{"field": "trips_2025", "order": "descending"}]},
+    {
+      "window": [{"op": "rank", "as": "rank"}],
+      "sort": [{"field": "trips_2025", "order": "descending"}]
+    },
     {"filter": "datum.rank <= 10"}
   ],
-  "mark": {
-    "type": "bar",
-    "cornerRadiusEnd": 4
-  },
+  "mark": {"type": "bar", "cornerRadiusEnd": 4},
   "encoding": {
     "y": {
       "field": "country",
       "type": "nominal",
-      "sort": "-x",
+      "sort": {"field": "trips_2025", "order": "descending"},
       "title": null,
       "axis": {"labelFontSize": 12}
     },
