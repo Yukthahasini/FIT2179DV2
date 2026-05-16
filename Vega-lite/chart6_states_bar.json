@@ -49,7 +49,12 @@
           "field": "trips_2024_num",
           "type": "quantitative",
           "title": "Arrivals",
-          "axis": {"titleFontSize": 13, "labelFontSize": 12}
+          "axis": {
+            "values": [0, 1000, 2000, 3000, 4000],
+            "titleFontSize": 13, 
+            "labelFontSize": 12,
+            "grid": true
+          }
         },
         "color": {"value": "#6db3d4"},
         "tooltip": [
@@ -72,7 +77,12 @@
           "field": "trips_2025_num",
           "type": "quantitative",
           "title": "Arrivals",
-          "axis": {"titleFontSize": 13, "labelFontSize": 12}
+          "axis": {
+            "values": [0, 1000, 2000, 3000, 4000],
+            "titleFontSize": 13, 
+            "labelFontSize": 12,
+            "grid": true
+          }
         },
         "color": {"value": "#1a4a6b"},
         "tooltip": [
