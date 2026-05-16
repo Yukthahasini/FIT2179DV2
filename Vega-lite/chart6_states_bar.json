@@ -1,0 +1,52 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "International Visitor Arrivals by State (2025)",
+    "fontSize": 16,
+    "font": "Georgia",
+    "anchor": "start",
+    "color": "#1a4a6b",
+    "subtitle": "NSW receives the most international visitors, followed by VIC and QLD",
+    "subtitleFontSize": 13,
+    "subtitleColor": "#666"
+  },
+  "width": 700,
+  "height": 350,
+  "data": {
+    "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/states.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "calculate": "toNumber(datum.trips_2025)",
+      "as": "trips"
+    }
+  ],
+  "mark": {"type": "bar", "cornerRadiusEnd": 4},
+  "encoding": {
+    "y": {
+      "field": "state_abbr",
+      "type": "nominal",
+      "sort": {"field": "trips", "order": "descending"},
+      "title": null,
+      "axis": {"labelFontSize": 13}
+    },
+    "x": {
+      "field": "trips",
+      "type": "quantitative",
+      "title": "Arrivals",
+      "axis": {"titleFontSize": 13, "labelFontSize": 12}
+    },
+    "color": {
+      "field": "trips",
+      "type": "quantitative",
+      "scale": {"scheme": "greens"},
+      "legend": null
+    },
+    "tooltip": [
+      {"field": "state", "type": "nominal", "title": "State"},
+      {"field": "trips", "type": "quantitative", "title": "Arrivals", "format": ",.1f"},
+      {"field": "spend_2025_m", "type": "quantitative", "title": "Spend ($M)", "format": ",.0f"}
+    ]
+  }
+}
