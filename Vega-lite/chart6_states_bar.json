@@ -1,12 +1,12 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "International Visitor Arrivals by State (2025)",
+    "text": "International Visitor Arrivals by State: 2024 vs 2025",
     "fontSize": 16,
     "font": "Georgia",
     "anchor": "start",
     "color": "#1a4a6b",
-    "subtitle": "NSW receives the most international visitors, followed by VIC and QLD",
+    "subtitle": "Every state saw growth in 2025 — NSW remains the top destination",
     "subtitleFontSize": 13,
     "subtitleColor": "#666"
   },
@@ -17,36 +17,71 @@
     "format": {"type": "csv"}
   },
   "transform": [
+    {"calculate": "toNumber(datum.trips_2024)", "as": "trips_2024_num"},
+    {"calculate": "toNumber(datum.trips_2025)", "as": "trips_2025_num"}
+  ],
+  "layer": [
     {
-      "calculate": "toNumber(datum.trips_2025)",
-      "as": "trips"
+      "mark": {"type": "rule", "color": "#cccccc", "strokeWidth": 2},
+      "encoding": {
+        "y": {
+          "field": "state_abbr",
+          "type": "nominal",
+          "sort": {"field": "trips_2025_num", "order": "descending"},
+          "title": null,
+          "axis": {"labelFontSize": 13}
+        },
+        "x": {"field": "trips_2024_num", "type": "quantitative"},
+        "x2": {"field": "trips_2025_num"}
+      }
+    },
+    {
+      "mark": {"type": "point", "filled": true, "size": 120},
+      "encoding": {
+        "y": {
+          "field": "state_abbr",
+          "type": "nominal",
+          "sort": {"field": "trips_2025_num", "order": "descending"},
+          "title": null,
+          "axis": {"labelFontSize": 13}
+        },
+        "x": {
+          "field": "trips_2024_num",
+          "type": "quantitative",
+          "title": "Arrivals",
+          "axis": {"titleFontSize": 13, "labelFontSize": 12}
+        },
+        "color": {"value": "#6db3d4"},
+        "tooltip": [
+          {"field": "state", "type": "nominal", "title": "State"},
+          {"field": "trips_2024_num", "type": "quantitative", "title": "Arrivals 2024", "format": ",.1f"}
+        ]
+      }
+    },
+    {
+      "mark": {"type": "point", "filled": true, "size": 120},
+      "encoding": {
+        "y": {
+          "field": "state_abbr",
+          "type": "nominal",
+          "sort": {"field": "trips_2025_num", "order": "descending"},
+          "title": null,
+          "axis": {"labelFontSize": 13}
+        },
+        "x": {
+          "field": "trips_2025_num",
+          "type": "quantitative",
+          "title": "Arrivals",
+          "axis": {"titleFontSize": 13, "labelFontSize": 12}
+        },
+        "color": {"value": "#1a4a6b"},
+        "tooltip": [
+          {"field": "state", "type": "nominal", "title": "State"},
+          {"field": "trips_2025_num", "type": "quantitative", "title": "Arrivals 2025", "format": ",.1f"}
+        ]
+      }
     }
   ],
-  "mark": {"type": "bar", "cornerRadiusEnd": 4},
-  "encoding": {
-    "y": {
-      "field": "state_abbr",
-      "type": "nominal",
-      "sort": {"field": "trips", "order": "descending"},
-      "title": null,
-      "axis": {"labelFontSize": 13}
-    },
-    "x": {
-      "field": "trips",
-      "type": "quantitative",
-      "title": "Arrivals",
-      "axis": {"titleFontSize": 13, "labelFontSize": 12}
-    },
-    "color": {
-      "field": "trips",
-      "type": "quantitative",
-      "scale": {"scheme": "greens"},
-      "legend": null
-    },
-    "tooltip": [
-      {"field": "state", "type": "nominal", "title": "State"},
-      {"field": "trips", "type": "quantitative", "title": "Arrivals", "format": ",.1f"},
-      {"field": "spend_2025_m", "type": "quantitative", "title": "Spend ($M)", "format": ",.0f"}
-    ]
-  }
+  "resolve": {"scale": {"y": "shared", "x": "shared"}},
+  "config": {"view": {"stroke": null}}
 }
