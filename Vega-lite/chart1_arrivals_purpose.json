@@ -1,1 +1,72 @@
-
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "International Arrivals by Purpose of Travel (2015–2025)",
+    "fontSize": 16,
+    "font": "Georgia",
+    "anchor": "start",
+    "color": "#1a4a6b",
+    "subtitle": "Holiday and visiting friends & relatives drive the majority of arrivals",
+    "subtitleFontSize": 13,
+    "subtitleColor": "#666"
+  },
+  "width": 700,
+  "height": 350,
+  "data": {
+    "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/arrivals_trend.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"filter": "datum.year >= 2015 && datum.year <= 2025"},
+    {
+      "fold": ["holiday", "vfr", "business", "education"],
+      "as": ["purpose", "arrivals"]
+    },
+    {
+      "calculate": "datum.purpose === 'holiday' ? 'Holiday' : datum.purpose === 'vfr' ? 'Visiting Friends & Relatives' : datum.purpose === 'business' ? 'Business' : 'Education'",
+      "as": "purpose_label"
+    },
+    {
+      "calculate": "datum.arrivals / 1000000",
+      "as": "arrivals_millions"
+    }
+  ],
+  "mark": {
+    "type": "line",
+    "point": true,
+    "strokeWidth": 2.5
+  },
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "title": "Year",
+      "axis": {"labelFontSize": 12, "titleFontSize": 13}
+    },
+    "y": {
+      "field": "arrivals_millions",
+      "type": "quantitative",
+      "title": "Arrivals (Millions)",
+      "axis": {"labelFontSize": 12, "titleFontSize": 13}
+    },
+    "color": {
+      "field": "purpose_label",
+      "type": "nominal",
+      "title": "Purpose",
+      "scale": {
+        "domain": ["Holiday", "Visiting Friends & Relatives", "Business", "Education"],
+        "range": ["#1a4a6b", "#e8703a", "#6db3d4", "#4a8a4a"]
+      },
+      "legend": {
+        "titleFontSize": 12,
+        "labelFontSize": 12,
+        "orient": "bottom"
+      }
+    },
+    "tooltip": [
+      {"field": "year", "type": "ordinal", "title": "Year"},
+      {"field": "purpose_label", "type": "nominal", "title": "Purpose"},
+      {"field": "arrivals_millions", "type": "quantitative", "title": "Arrivals (M)", "format": ".2f"}
+    ]
+  }
+}
