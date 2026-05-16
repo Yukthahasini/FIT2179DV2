@@ -1,16 +1,20 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Top Countries Visiting Australia (2025)",
+    "text": "Top 10 Countries Visiting Australia (2025)",
     "fontSize": 16,
     "font": "Georgia",
     "anchor": "start",
-    "color": "#1a4a6b"
+    "color": "#1a4a6b",
+    "subtitle": "New Zealand leads in arrivals, while China dominates in total spend",
+    "subtitleFontSize": 13,
+    "subtitleColor": "#666"
   },
-  "width": "container",
-  "height": 400,
+  "width": 700,
+  "height": 350,
   "data": {
-    "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/countries.csv"
+    "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/countries.csv",
+    "format": {"type": "csv"}
   },
   "transform": [
     {"filter": "datum.trips_2025 > 0"},
@@ -32,8 +36,8 @@
     "x": {
       "field": "trips_2025",
       "type": "quantitative",
-      "title": "Arrivals",
-      "axis": {"titleFontSize": 12, "labelFontSize": 11}
+      "title": "Arrivals ('000)",
+      "axis": {"titleFontSize": 13, "labelFontSize": 12}
     },
     "color": {
       "field": "trips_2025",
@@ -44,7 +48,8 @@
     "tooltip": [
       {"field": "country", "type": "nominal", "title": "Country"},
       {"field": "trips_2025", "type": "quantitative", "title": "Arrivals", "format": ",.1f"},
-      {"field": "spend_2025", "type": "quantitative", "title": "Spend in Australia ($M)", "format": ",.0f"}
+      {"field": "spend_2025_m", "type": "quantitative", "title": "Spend in Australia ($M)", "format": ",.0f"},
+      {"field": "spend_per_trip_2025", "type": "quantitative", "title": "Spend per Trip ($)", "format": ",.0f"}
     ]
   }
 }
