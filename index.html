@@ -7,7 +7,6 @@
 
     <title>Australia's International Tourism</title>
 
-    <!-- Vega Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
@@ -17,57 +16,196 @@
             font-family: Georgia, serif;
             background-color: #f5efe6;
             margin: 0;
-            padding: 40px;
             color: #1a1a1a;
+        }
+
+        .page {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px;
         }
 
         h1 {
             color: #1a4a6b;
-            font-size: 42px;
+            font-size: 54px;
             margin-bottom: 10px;
         }
 
         .subtitle {
-            font-size: 18px;
-            margin-bottom: 40px;
+            font-size: 21px;
+            margin-bottom: 20px;
             color: #555;
+        }
+
+        .intro-text {
+            max-width: 900px;
+            font-size: 17px;
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 45px;
+        }
+
+        .section {
+            margin-top: 55px;
+        }
+
+        .section-title {
+            color: #1a4a6b;
+            font-size: 30px;
+            border-left: 7px solid #1a4a6b;
+            padding-left: 15px;
+            margin-bottom: 25px;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+            margin-bottom: 35px;
+        }
+
+        .kpi-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .kpi-card h3 {
+            color: #1a4a6b;
+            font-size: 36px;
+            margin: 0;
+        }
+
+        .kpi-card p {
+            color: #555;
+            font-size: 16px;
+            margin-top: 8px;
         }
 
         .chart-container {
             background: white;
-            padding: 25px;
-            border-radius: 10px;
+            padding: 28px;
+            border-radius: 12px;
             box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 40px;
+            margin-bottom: 35px;
+        }
+
+        .chart-note {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+
+        .placeholder {
+            color: #777;
+            font-style: italic;
+            padding: 30px;
+            text-align: center;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
         }
     </style>
 </head>
 
 <body>
 
-    <h1>Australia's International Tourism</h1>
+    <div class="page">
 
-    <p class="subtitle">
-        Who visits Australia and how tourism shapes the economy.
-    </p>
+        <h1>Australia's International Tourism</h1>
 
-    <div class="chart-container">
-        <div id="vis"></div>
+        <p class="subtitle">
+            Who visits, where they go, and what they spend.
+        </p>
+
+        <p class="intro-text">
+            International tourism plays an important role in Australia’s economy, cities, and regional communities.
+            This visualisation explores visitor arrivals, travel purposes, state destinations, and spending patterns
+            to show how tourism shapes Australia in 2025.
+        </p>
+
+        <!-- SECTION 1 -->
+        <section class="section">
+            <h2 class="section-title">Section 1 — The Big Picture</h2>
+
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <h3>8.9M</h3>
+                    <p>International visitors</p>
+                </div>
+
+                <div class="kpi-card">
+                    <h3>$39.2B</h3>
+                    <p>Total visitor spend</p>
+                </div>
+
+                <div class="kpi-card">
+                    <h3>2.9%</h3>
+                    <p>Contribution to GDP</p>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="placeholder">
+                    Chart 1 will go here: Multi-line arrivals by purpose, 2015–2025.
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section class="section">
+            <h2 class="section-title">Section 2 — Who’s Coming?</h2>
+
+            <div class="chart-container">
+                <div id="chart2"></div>
+
+                <p class="chart-note">
+                    New Zealand remains Australia’s largest source of international visitors in 2025,
+                    followed by China, the United Kingdom, and the United States.
+                </p>
+            </div>
+
+            <div class="chart-container">
+                <div class="placeholder">
+                    Chart 3 will go here: Donut chart by reason for journey.
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="placeholder">
+                    Chart 4 will go here: Duration of stay breakdown.
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section class="section">
+            <h2 class="section-title">Section 3 — Where Do They Go?</h2>
+
+            <div class="chart-container">
+                <div class="placeholder">
+                    Chart 5 will go here: Choropleth map of arrivals by state.
+                </div>
+            </div>
+        </section>
+
     </div>
 
     <script>
-        vegaEmbed("#vis", {
+        vegaEmbed("#chart2", {
             "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
             "title": {
                 "text": "Top Countries Visiting Australia (2025)",
-                "fontSize": 18,
+                "fontSize": 20,
                 "anchor": "start",
                 "color": "#1a4a6b"
             },
 
-            "width": 700,
-            "height": 400,
+            "width": 900,
+            "height": 420,
 
             "data": {
                 "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/countries.csv"
@@ -79,18 +217,24 @@
             },
 
             "encoding": {
-
                 "y": {
                     "field": "country",
                     "type": "nominal",
                     "sort": "-x",
-                    "title": null
+                    "title": null,
+                    "axis": {
+                        "labelFontSize": 13
+                    }
                 },
 
                 "x": {
                     "field": "trips_2025",
                     "type": "quantitative",
-                    "title": "Arrivals ('000)"
+                    "title": "Arrivals ('000)",
+                    "axis": {
+                        "labelFontSize": 12,
+                        "titleFontSize": 13
+                    }
                 },
 
                 "color": {
@@ -106,11 +250,24 @@
                     {
                         "field": "trips_2025",
                         "type": "quantitative",
-                        "title": "Arrivals ('000)"
+                        "title": "Arrivals ('000)",
+                        "format": ",.1f"
+                    },
+                    {
+                        "field": "spend_2025_m",
+                        "type": "quantitative",
+                        "title": "Spend ($M)",
+                        "format": ",.0f"
                     }
                 ]
+            },
+
+            "config": {
+                "view": {
+                    "stroke": null
+                }
             }
-        });
+        }, { actions: false });
     </script>
 
 </body>
