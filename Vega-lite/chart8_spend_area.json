@@ -60,7 +60,7 @@
       "title": "Purpose",
       "scale": {
         "domain": ["Holiday", "VFR", "Business", "Education", "Employment", "Other"],
-        "range": ["#1a4a6b", "#e8703a", "#6db3d4", "#4a8a4a", "#c8bfb0", "#999999"]
+        "range": ["#1f4e79","#ff7f50","#5dade2","#58a55c","#d2b48c","#8c8c8c"]
       },
       "legend": {
         "orient": "right",
