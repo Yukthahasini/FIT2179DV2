@@ -263,12 +263,13 @@
 
             <div class="chart-container">
 
-                <div class="placeholder">
-                    Chart 8 will go here: Visitor spend by purpose, 2015–2025.
-                </div>
+                <div id="chart8"></div>
 
                 <p class="chart-note">
-                    Spending by purpose helps show which types of visitors contribute most to Australia’s tourism economy.
+                    Holiday visitors account for the largest share of total spend, 
+                    but Education visitors spend significantly more per trip than 
+                    any other group — making them extremely high value to Australia's 
+                    tourism economy.
                 </p>
 
             </div>
@@ -330,6 +331,8 @@
         vegaEmbed("#chart6", "Vega-lite/chart6_states_plot.json", { actions: false });
 
         vegaEmbed("#chart7", "Vega-lite/chart7_state_share.json", { actions: false });
+
+        vegaEmbed("#chart7", "Vega-lite/chart8_spend_area.json", { actions: false });
 
     </script>
 
