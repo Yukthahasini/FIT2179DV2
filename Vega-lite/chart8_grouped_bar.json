@@ -1,0 +1,84 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "International Arrivals by Purpose: 2015, 2019 and 2025",
+    "fontSize": 16,
+    "font": "Georgia",
+    "anchor": "start",
+    "color": "#1a4a6b",
+    "subtitle": "Holiday arrivals dominate but Education has grown steadily over the decade",
+    "subtitleFontSize": 13,
+    "subtitleColor": "#666"
+  },
+  "width": 700,
+  "height": 380,
+  "data": {
+    "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/arrivals_trend.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"calculate": "toNumber(datum.year)", "as": "year_num"},
+    {"filter": "datum.year_num == 2015 || datum.year_num == 2019 || datum.year_num == 2025"},
+    {"calculate": "toNumber(datum.holiday)",   "as": "holiday_num"},
+    {"calculate": "toNumber(datum.vfr)",       "as": "vfr_num"},
+    {"calculate": "toNumber(datum.business)",  "as": "business_num"},
+    {"calculate": "toNumber(datum.education)", "as": "education_num"},
+    {
+      "fold": ["holiday_num", "vfr_num", "business_num", "education_num"],
+      "as": ["purpose_key", "arrivals"]
+    },
+    {
+      "calculate": "datum.purpose_key === 'holiday_num' ? 'Holiday' : datum.purpose_key === 'vfr_num' ? 'VFR' : datum.purpose_key === 'business_num' ? 'Business' : 'Education'",
+      "as": "purpose_label"
+    },
+    {
+      "calculate": "datum.arrivals / 1000000",
+      "as": "arrivals_millions"
+    },
+    {
+      "calculate": "toString(datum.year_num)",
+      "as": "year_label"
+    }
+  ],
+  "mark": {"type": "bar", "cornerRadiusEnd": 3},
+  "encoding": {
+    "x": {
+      "field": "purpose_label",
+      "type": "nominal",
+      "title": "Purpose of Travel",
+      "sort": ["Holiday", "VFR", "Business", "Education"],
+      "axis": {"labelFontSize": 12, "titleFontSize": 13, "labelAngle": 0}
+    },
+    "y": {
+      "field": "arrivals_millions",
+      "type": "quantitative",
+      "title": "Arrivals (Millions)",
+      "axis": {"titleFontSize": 13, "labelFontSize": 12}
+    },
+    "color": {
+      "field": "year_label",
+      "type": "nominal",
+      "title": "Year",
+      "scale": {
+        "domain": ["2015", "2019", "2025"],
+        "range": ["#6db3d4", "#e8703a", "#1a4a6b"]
+      },
+      "legend": {
+        "titleFontSize": 12,
+        "labelFontSize": 12,
+        "orient": "top-right"
+      }
+    },
+    "xOffset": {
+      "field": "year_label",
+      "type": "nominal",
+      "sort": ["2015", "2019", "2025"]
+    },
+    "tooltip": [
+      {"field": "purpose_label", "type": "nominal", "title": "Purpose"},
+      {"field": "year_label", "type": "nominal", "title": "Year"},
+      {"field": "arrivals_millions", "type": "quantitative", "title": "Arrivals (M)", "format": ".2f"}
+    ]
+  },
+  "config": {"view": {"stroke": null}}
+}
