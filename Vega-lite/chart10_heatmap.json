@@ -6,7 +6,7 @@
     "font": "Georgia",
     "anchor": "start",
     "color": "#1a4a6b",
-    "subtitle": "NSW consistently leads — darker cells mean more visitors that year",
+    "subtitle": "The 2020–2021 disruption is visible across all states",
     "subtitleFontSize": 13,
     "subtitleColor": "#666"
   },
@@ -21,13 +21,13 @@
     {"calculate": "toNumber(datum.NSW)", "as": "NSW_num"},
     {"calculate": "toNumber(datum.VIC)", "as": "VIC_num"},
     {"calculate": "toNumber(datum.QLD)", "as": "QLD_num"},
-    {"calculate": "toNumber(datum.WA)",  "as": "WA_num"},
-    {"calculate": "toNumber(datum.SA)",  "as": "SA_num"},
+    {"calculate": "toNumber(datum.WA)", "as": "WA_num"},
+    {"calculate": "toNumber(datum.SA)", "as": "SA_num"},
     {"calculate": "toNumber(datum.TAS)", "as": "TAS_num"},
-    {"calculate": "toNumber(datum.NT)",  "as": "NT_num"},
     {"calculate": "toNumber(datum.ACT)", "as": "ACT_num"},
+    {"calculate": "toNumber(datum.NT)", "as": "NT_num"},
     {
-      "fold": ["NSW_num","VIC_num","QLD_num","WA_num","SA_num","TAS_num","NT_num","ACT_num"],
+      "fold": ["NSW_num", "VIC_num", "QLD_num", "WA_num", "SA_num", "TAS_num", "ACT_num", "NT_num"],
       "as": ["state_key", "arrivals"]
     },
     {
@@ -41,46 +41,88 @@
     {
       "calculate": "datum.arrivals / 1000000",
       "as": "arrivals_millions"
+    },
+    {
+      "calculate": "datum.state == 'NSW' || datum.state == 'VIC' || datum.state == 'QLD' ? format(datum.arrivals_millions, '.1f') : ''",
+      "as": "label_text"
     }
   ],
-  "mark": {"type": "rect"},
-  "encoding": {
-    "x": {
-      "field": "year_label",
-      "type": "ordinal",
-      "title": "Year",
-      "sort": ["2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025"],
-      "axis": {"labelFontSize": 12, "titleFontSize": 13, "labelAngle": 0}
-    },
-    "y": {
-      "field": "state",
-      "type": "nominal",
-      "title": "State",
-      "sort": ["NSW","VIC","QLD","WA","SA","TAS","ACT","NT"],
-      "axis": {"labelFontSize": 12, "titleFontSize": 13}
-    },
-    "color": {
-      "field": "arrivals_millions",
-      "type": "quantitative",
-      "title": "Arrivals (M)",
-      "scale": {
-        "scheme": "blues",
-        "domain": [0, 4.5]
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "stroke": "white",
+        "strokeWidth": 1.5
       },
-      "legend": {
-        "titleFontSize": 12,
-        "labelFontSize": 11,
-        "orient": "right"
+      "encoding": {
+        "x": {
+          "field": "year_label",
+          "type": "ordinal",
+          "title": "Year",
+          "sort": ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"],
+          "axis": {
+            "labelFontSize": 12,
+            "titleFontSize": 13,
+            "labelAngle": 0
+          }
+        },
+        "y": {
+          "field": "state",
+          "type": "nominal",
+          "title": "State",
+          "sort": ["NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"],
+          "axis": {
+            "labelFontSize": 12,
+            "titleFontSize": 13
+          }
+        },
+        "color": {
+          "field": "arrivals_millions",
+          "type": "quantitative",
+          "title": "Arrivals (M)",
+          "scale": {
+            "range": ["#dce9f2", "#bdd7e7", "#6baed6", "#3182bd", "#08519c"],
+            "domain": [0, 4.5]
+          },
+          "legend": {
+            "titleFontSize": 12,
+            "labelFontSize": 11,
+            "orient": "right"
+          }
+        },
+        "tooltip": [
+          {"field": "state", "type": "nominal", "title": "State"},
+          {"field": "year_label", "type": "ordinal", "title": "Year"},
+          {"field": "arrivals_millions", "type": "quantitative", "title": "Arrivals (M)", "format": ".2f"}
+        ]
       }
     },
-    "tooltip": [
-      {"field": "state", "type": "nominal", "title": "State"},
-      {"field": "year_label", "type": "ordinal", "title": "Year"},
-      {"field": "arrivals_millions", "type": "quantitative", "title": "Arrivals (M)", "format": ".2f"}
-    ]
-  },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 9,
+        "fontWeight": "bold",
+        "color": "white"
+      },
+      "encoding": {
+        "x": {
+          "field": "year_label",
+          "type": "ordinal",
+          "sort": ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"]
+        },
+        "y": {
+          "field": "state",
+          "type": "nominal",
+          "sort": ["NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"]
+        },
+        "text": {
+          "field": "label_text",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
   "config": {
-    "view": {"stroke": null},
-    "rect": {"stroke": "white", "strokeWidth": 1.5}
+    "view": {"stroke": null}
   }
 }
