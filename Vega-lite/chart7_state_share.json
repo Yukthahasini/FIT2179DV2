@@ -1,16 +1,16 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "State Rankings by International Arrivals (2015–2025)",
+    "text": "State Rankings by International Arrivals: 2015, 2019 and 2025",
     "fontSize": 16,
     "font": "Georgia",
     "anchor": "start",
     "color": "#1a4a6b",
-    "subtitle": "NSW and VIC have held the top two spots throughout the decade",
+    "subtitle": "NSW and VIC stay at the top, while smaller states shift positions",
     "subtitleFontSize": 13,
     "subtitleColor": "#666"
   },
-  "width": 700,
+  "width": 560,
   "height": 380,
   "data": {
     "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/state_trend.csv",
@@ -18,16 +18,17 @@
   },
   "transform": [
     {"calculate": "toNumber(datum.year)", "as": "year_num"},
+    {"filter": "datum.year_num == 2015 || datum.year_num == 2019 || datum.year_num == 2025"},
     {"calculate": "toNumber(datum.NSW)", "as": "NSW_num"},
     {"calculate": "toNumber(datum.VIC)", "as": "VIC_num"},
     {"calculate": "toNumber(datum.QLD)", "as": "QLD_num"},
-    {"calculate": "toNumber(datum.WA)",  "as": "WA_num"},
-    {"calculate": "toNumber(datum.SA)",  "as": "SA_num"},
+    {"calculate": "toNumber(datum.WA)", "as": "WA_num"},
+    {"calculate": "toNumber(datum.SA)", "as": "SA_num"},
     {"calculate": "toNumber(datum.TAS)", "as": "TAS_num"},
-    {"calculate": "toNumber(datum.NT)",  "as": "NT_num"},
+    {"calculate": "toNumber(datum.NT)", "as": "NT_num"},
     {"calculate": "toNumber(datum.ACT)", "as": "ACT_num"},
     {
-      "fold": ["NSW_num","VIC_num","QLD_num","WA_num","SA_num","TAS_num","NT_num","ACT_num"],
+      "fold": ["NSW_num", "VIC_num", "QLD_num", "WA_num", "SA_num", "TAS_num", "NT_num", "ACT_num"],
       "as": ["state_key", "arrivals"]
     },
     {
@@ -38,21 +39,33 @@
       "window": [{"op": "rank", "as": "rank"}],
       "sort": [{"field": "arrivals", "order": "descending"}],
       "groupby": ["year_num"]
+    },
+    {
+      "calculate": "toString(datum.year_num)",
+      "as": "year_label"
+    },
+    {
+      "calculate": "datum.state == 'QLD' || datum.state == 'NT' ? 1 : 0.35",
+      "as": "line_opacity"
     }
   ],
   "layer": [
     {
       "mark": {
         "type": "line",
-        "strokeWidth": 2.5,
+        "strokeWidth": 3,
         "interpolate": "monotone"
       },
       "encoding": {
         "x": {
-          "field": "year_num",
+          "field": "year_label",
           "type": "ordinal",
           "title": "Year",
-          "axis": {"labelFontSize": 12, "titleFontSize": 13}
+          "sort": ["2015", "2019", "2025"],
+          "axis": {
+            "labelFontSize": 13,
+            "titleFontSize": 13
+          }
         },
         "y": {
           "field": "rank",
@@ -68,16 +81,16 @@
         "color": {
           "field": "state",
           "type": "nominal",
-          "title": "State",
           "scale": {
-            "domain": ["NSW","VIC","QLD","WA","SA","TAS","ACT","NT"],
-            "range": ["#1a4a6b","#e8703a","#6db3d4","#4a8a4a","#c8bfb0","#9b59b6","#e74c3c","#f39c12"]
+            "domain": ["NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"],
+            "range": ["#1a4a6b", "#e8703a", "#6db3d4", "#4a8a4a", "#c8bfb0", "#9b59b6", "#e74c3c", "#f39c12"]
           },
-          "legend": {
-            "titleFontSize": 12,
-            "labelFontSize": 12,
-            "orient": "right"
-          }
+          "legend": null
+        },
+        "opacity": {
+          "field": "line_opacity",
+          "type": "quantitative",
+          "legend": null
         }
       }
     },
@@ -85,12 +98,14 @@
       "mark": {
         "type": "point",
         "filled": true,
-        "size": 80
+        "size": 45,
+        "opacity": 0.85
       },
       "encoding": {
         "x": {
-          "field": "year_num",
-          "type": "ordinal"
+          "field": "year_label",
+          "type": "ordinal",
+          "sort": ["2015", "2019", "2025"]
         },
         "y": {
           "field": "rank",
@@ -99,14 +114,82 @@
         },
         "color": {
           "field": "state",
-          "type": "nominal"
+          "type": "nominal",
+          "legend": null
+        },
+        "opacity": {
+          "field": "line_opacity",
+          "type": "quantitative",
+          "legend": null
         },
         "tooltip": [
           {"field": "state", "type": "nominal", "title": "State"},
-          {"field": "year_num", "type": "ordinal", "title": "Year"},
+          {"field": "year_label", "type": "ordinal", "title": "Year"},
           {"field": "rank", "type": "ordinal", "title": "Rank"},
           {"field": "arrivals", "type": "quantitative", "title": "Arrivals", "format": ",.0f"}
         ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "dx": -28,
+        "align": "right"
+      },
+      "transform": [
+        {"filter": "datum.year_label == '2015'"}
+      ],
+      "encoding": {
+        "x": {
+          "field": "year_label",
+          "type": "ordinal",
+          "sort": ["2015", "2019", "2025"]
+        },
+        "y": {
+          "field": "rank",
+          "type": "ordinal",
+          "sort": "ascending"
+        },
+        "text": {"field": "state"},
+        "color": {"field": "state", "type": "nominal", "legend": null},
+        "opacity": {
+          "field": "line_opacity",
+          "type": "quantitative",
+          "legend": null
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "dx": 28,
+        "align": "left"
+      },
+      "transform": [
+        {"filter": "datum.year_label == '2025'"}
+      ],
+      "encoding": {
+        "x": {
+          "field": "year_label",
+          "type": "ordinal",
+          "sort": ["2015", "2019", "2025"]
+        },
+        "y": {
+          "field": "rank",
+          "type": "ordinal",
+          "sort": "ascending"
+        },
+        "text": {"field": "state"},
+        "color": {"field": "state", "type": "nominal", "legend": null},
+        "opacity": {
+          "field": "line_opacity",
+          "type": "quantitative",
+          "legend": null
+        }
       }
     }
   ],
