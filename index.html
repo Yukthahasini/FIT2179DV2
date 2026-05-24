@@ -332,6 +332,19 @@
                 </p>
             </div>
 
+            <div class="chart-container">
+                <p class="takeaway">
+                    The UK climbed two places in 2025 while Korea dropped
+                    out of the top rankings — showing how source markets shift year to year.
+                </p>
+                <div id="chart12"></div>
+                <p class="chart-note">
+                    Each line connects a country's 2024 rank on the left
+                    to its 2025 rank on the right.
+                    Rising lines mean a country moved up in arrivals ranking.
+                </p>
+            </div>
+
             <div class="two-column">
 
                 <div class="chart-container">
@@ -373,17 +386,32 @@
                 has shifted over the past decade.
             </p>
 
-            <div class="chart-container">
-                <p class="takeaway">
-                    NSW receives the most visitors by far,
-                    driven by Sydney as Australia's main international gateway.
-                </p>
-                <div id="chart5"></div>
-                <p class="chart-note">
-                    The map shows international visitor arrivals by state in 2025.
-                    Darker shading indicates more visitors.
-                    Hover over each state to see exact figures.
-                </p>
+            <div class="two-column">
+
+                <div class="chart-container">
+                    <p class="takeaway">
+                        NSW receives the most visitors by far,
+                        driven by Sydney as Australia's main international gateway.
+                    </p>
+                    <div id="chart5"></div>
+                    <p class="chart-note">
+                        Darker shading indicates more arrivals by state in 2025.
+                        Hover over each state to see exact figures.
+                    </p>
+                </div>
+
+                <div class="chart-container">
+                    <p class="takeaway">
+                        NSW also leads in total visitor spend,
+                        but WA punches above its weight relative to arrivals.
+                    </p>
+                    <div id="chart5b"></div>
+                    <p class="chart-note">
+                        Each circle is sized by total visitor spend in that state.
+                        Larger circles mean more spending, not necessarily more visitors.
+                    </p>
+                </div>
+
             </div>
 
             <div class="chart-container">
@@ -525,17 +553,19 @@
     </footer>
 
     <script>
-        vegaEmbed("#chart1", "Vega-lite/chart1_arrivals_purpose.json", { actions: false });
-        vegaEmbed("#chart2", "Vega-lite/chart2_countries.json", { actions: false });
-        vegaEmbed("#chart3", "Vega-lite/chart3_purpose_donut.json", { actions: false });
-        vegaEmbed("#chart4", "Vega-lite/chart4_duration.json", { actions: false });
-        vegaEmbed("#chart5", "Vega-lite/chart5_map.json", { actions: false });
-        vegaEmbed("#chart6", "Vega-lite/chart6_states_plot.json", { actions: false });
-        vegaEmbed("#chart7", "Vega-lite/chart7_state_share.json", { actions: false });
-        vegaEmbed("#chart8", "Vega-lite/chart8_spend_area.json", { actions: false });
-        vegaEmbed("#chart9", "Vega-lite/chart9_arrivals_spend.json", { actions: false });
-        vegaEmbed("#chart10", "Vega-lite/chart10_heatmap.json", { actions: false });
-        vegaEmbed("#chart11", "Vega-lite/chart11_bubble.json", { actions: false });
+        vegaEmbed("#chart1",  "Vega-lite/chart1_arrivals_purpose.json",  { actions: false });
+        vegaEmbed("#chart2",  "Vega-lite/chart2_countries.json",          { actions: false });
+        vegaEmbed("#chart3",  "Vega-lite/chart3_purpose_donut.json",      { actions: false });
+        vegaEmbed("#chart4",  "Vega-lite/chart4_duration.json",           { actions: false });
+        vegaEmbed("#chart5",  "Vega-lite/chart5_map.json",                { actions: false });
+        vegaEmbed("#chart5b", "Vega-lite/chart5b_symbol_map.json",        { actions: false });
+        vegaEmbed("#chart6",  "Vega-lite/chart6_states_plot.json",        { actions: false });
+        vegaEmbed("#chart7",  "Vega-lite/chart7_state_share.json",        { actions: false });
+        vegaEmbed("#chart8",  "Vega-lite/chart8_grouped_bar.json",        { actions: false });
+        vegaEmbed("#chart9",  "Vega-lite/chart9_arrivals_spend.json",     { actions: false });
+        vegaEmbed("#chart10", "Vega-lite/chart10_heatmap.json",           { actions: false });
+        vegaEmbed("#chart11", "Vega-lite/chart11_bubble.json",            { actions: false });
+        vegaEmbed("#chart12", "Vega-lite/chart12_slope.json",             { actions: false });
     </script>
 
 </body>
