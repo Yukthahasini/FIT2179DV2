@@ -1,12 +1,12 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "State Share of International Arrivals (2015–2025)",
+    "text": "State Rankings by International Arrivals (2015–2025)",
     "fontSize": 16,
     "font": "Georgia",
     "anchor": "start",
     "color": "#1a4a6b",
-    "subtitle": "NSW and VIC have maintained dominance while QLD has steadily grown its share",
+    "subtitle": "NSW and VIC have held the top two spots throughout the decade",
     "subtitleFontSize": 13,
     "subtitleColor": "#666"
   },
@@ -18,7 +18,6 @@
   },
   "transform": [
     {"calculate": "toNumber(datum.year)", "as": "year_num"},
-    {"calculate": "toNumber(datum.total)", "as": "total_num"},
     {"calculate": "toNumber(datum.NSW)", "as": "NSW_num"},
     {"calculate": "toNumber(datum.VIC)", "as": "VIC_num"},
     {"calculate": "toNumber(datum.QLD)", "as": "QLD_num"},
@@ -27,65 +26,90 @@
     {"calculate": "toNumber(datum.TAS)", "as": "TAS_num"},
     {"calculate": "toNumber(datum.NT)",  "as": "NT_num"},
     {"calculate": "toNumber(datum.ACT)", "as": "ACT_num"},
-    {"calculate": "datum.NSW_num / datum.total_num * 100", "as": "NSW_pct"},
-    {"calculate": "datum.VIC_num / datum.total_num * 100", "as": "VIC_pct"},
-    {"calculate": "datum.QLD_num / datum.total_num * 100", "as": "QLD_pct"},
-    {"calculate": "datum.WA_num  / datum.total_num * 100", "as": "WA_pct"},
-    {"calculate": "datum.SA_num  / datum.total_num * 100", "as": "SA_pct"},
-    {"calculate": "datum.TAS_num / datum.total_num * 100", "as": "TAS_pct"},
-    {"calculate": "datum.NT_num  / datum.total_num * 100", "as": "NT_pct"},
-    {"calculate": "datum.ACT_num / datum.total_num * 100", "as": "ACT_pct"},
     {
-      "fold": ["NSW_pct","VIC_pct","QLD_pct","WA_pct","SA_pct","TAS_pct","NT_pct","ACT_pct"],
-      "as": ["state_key", "share"]
+      "fold": ["NSW_num","VIC_num","QLD_num","WA_num","SA_num","TAS_num","NT_num","ACT_num"],
+      "as": ["state_key", "arrivals"]
     },
     {
-      "calculate": "replace(datum.state_key, '_pct', '')",
+      "calculate": "replace(datum.state_key, '_num', '')",
       "as": "state"
+    },
+    {
+      "window": [{"op": "rank", "as": "rank"}],
+      "sort": [{"field": "arrivals", "order": "descending"}],
+      "groupby": ["year_num"]
     }
   ],
-  "mark": {
-    "type": "area",
-    "opacity": 0.85
-  },
-  "encoding": {
-    "x": {
-      "field": "year_num",
-      "type": "ordinal",
-      "title": "Year",
-      "axis": {"labelFontSize": 12, "titleFontSize": 13}
-    },
-    "y": {
-      "field": "share",
-      "type": "quantitative",
-      "title": "Share of Total Arrivals (%)",
-      "stack": "normalize",
-      "axis": {
-        "format": ".0%",
-        "titleFontSize": 13,
-        "labelFontSize": 12
-      }
-    },
-    "color": {
-      "field": "state",
-      "type": "nominal",
-      "title": "State",
-      "scale": {
-        "domain": ["NSW","VIC","QLD","WA","SA","TAS","ACT","NT"],
-        "range": ["#1a4a6b","#e8703a","#6db3d4","#4a8a4a","#c8bfb0","#9b59b6","#e74c3c","#f39c12"]
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2.5,
+        "interpolate": "monotone"
       },
-      "legend": {
-        "titleFontSize": 12,
-        "labelFontSize": 12,
-        "orient": "right"
+      "encoding": {
+        "x": {
+          "field": "year_num",
+          "type": "ordinal",
+          "title": "Year",
+          "axis": {"labelFontSize": 12, "titleFontSize": 13}
+        },
+        "y": {
+          "field": "rank",
+          "type": "ordinal",
+          "title": "Rank",
+          "sort": "ascending",
+          "axis": {
+            "titleFontSize": 13,
+            "labelFontSize": 12,
+            "values": [1, 2, 3, 4, 5, 6, 7, 8]
+          }
+        },
+        "color": {
+          "field": "state",
+          "type": "nominal",
+          "title": "State",
+          "scale": {
+            "domain": ["NSW","VIC","QLD","WA","SA","TAS","ACT","NT"],
+            "range": ["#1a4a6b","#e8703a","#6db3d4","#4a8a4a","#c8bfb0","#9b59b6","#e74c3c","#f39c12"]
+          },
+          "legend": {
+            "titleFontSize": 12,
+            "labelFontSize": 12,
+            "orient": "right"
+          }
+        }
       }
     },
-    "tooltip": [
-      {"field": "year_num", "type": "ordinal", "title": "Year"},
-      {"field": "state", "type": "nominal", "title": "State"},
-      {"field": "share", "type": "quantitative", "title": "Share (%)", "format": ".1f"}
-    ]
-  },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 80
+      },
+      "encoding": {
+        "x": {
+          "field": "year_num",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "rank",
+          "type": "ordinal",
+          "sort": "ascending"
+        },
+        "color": {
+          "field": "state",
+          "type": "nominal"
+        },
+        "tooltip": [
+          {"field": "state", "type": "nominal", "title": "State"},
+          {"field": "year_num", "type": "ordinal", "title": "Year"},
+          {"field": "rank", "type": "ordinal", "title": "Rank"},
+          {"field": "arrivals", "type": "quantitative", "title": "Arrivals", "format": ",.0f"}
+        ]
+      }
+    }
+  ],
   "config": {
     "view": {"stroke": null}
   }
