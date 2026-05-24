@@ -1,0 +1,159 @@
+{
+ "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+
+ "title": {
+   "text": "International Visitor Arrivals by State (2025)",
+   "fontSize": 16,
+   "font": "Georgia",
+   "anchor": "start",
+   "color": "#1a4a6b",
+   "subtitle": "NSW attracts the most international visitors, followed by VIC and QLD",
+   "subtitleFontSize": 13,
+   "subtitleColor": "#666"
+ },
+
+
+ "width": 680,
+ "height": 420,
+
+
+ "projection": {
+   "type": "mercator"
+ },
+
+
+ "layer": [
+   {
+     "data": {
+       "url": "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.geojson",
+       "format": {
+         "type": "json",
+         "property": "features"
+       }
+     },
+
+
+     "transform": [
+       {
+         "lookup": "properties.STATE_NAME",
+         "from": {
+           "data": {
+             "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/states.csv",
+             "format": {
+               "type": "csv"
+             }
+           },
+           "key": "state",
+           "fields": [
+             "trips_2025",
+             "state_abbr",
+             "spend_2025_m"
+           ]
+         }
+       },
+       {
+         "calculate": "toNumber(datum.trips_2025)",
+         "as": "trips_num"
+       }
+     ],
+
+
+     "mark": {
+       "type": "geoshape",
+       "stroke": "white",
+       "strokeWidth": 1.5
+     },
+
+
+     "encoding": {
+       "color": {
+         "field": "trips_num",
+         "type": "quantitative",
+         "title": "Arrivals",
+         "scale": {
+           "scheme": "blues",
+           "domain": [0, 4500]
+         },
+         "legend": {
+           "titleFontSize": 12,
+           "labelFontSize": 11,
+           "orient": "bottom-right"
+         }
+       },
+
+
+       "tooltip": [
+         {
+           "field": "properties.STATE_NAME",
+           "type": "nominal",
+           "title": "State"
+         },
+         {
+           "field": "trips_num",
+           "type": "quantitative",
+           "title": "Arrivals",
+           "format": ",.1f"
+         },
+         {
+           "field": "spend_2025_m",
+           "type": "quantitative",
+           "title": "Spend ($M)",
+           "format": ",.0f"
+         }
+       ]
+     }
+   },
+
+
+   {
+     "data": {
+       "values": [
+         {"state": "WA", "lon": 121, "lat": -25},
+         {"state": "NT", "lon": 133, "lat": -19},
+         {"state": "SA", "lon": 135, "lat": -30},
+         {"state": "QLD", "lon": 145, "lat": -21},
+         {"state": "NSW", "lon": 147, "lat": -33},
+         {"state": "VIC", "lon": 145, "lat": -37},
+         {"state": "TAS", "lon": 146.5, "lat": -42},
+         {"state": "ACT", "lon": 149, "lat": -35.5}
+       ]
+     },
+
+
+     "mark": {
+       "type": "text",
+       "font": "Georgia",
+       "fontSize": 11,
+       "fontWeight": "bold",
+       "color": "#222"
+     },
+
+
+     "encoding": {
+       "longitude": {
+         "field": "lon",
+         "type": "quantitative"
+       },
+
+
+       "latitude": {
+         "field": "lat",
+         "type": "quantitative"
+       },
+
+
+       "text": {
+         "field": "state"
+       }
+     }
+   }
+ ],
+
+
+ "config": {
+   "view": {
+     "stroke": null
+   }
+ }
+}
