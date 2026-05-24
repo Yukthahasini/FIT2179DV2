@@ -78,7 +78,7 @@
          "legend": {
            "titleFontSize": 12,
            "labelFontSize": 11,
-           "orient": "bottom-right"
+           "orient": "right"
          }
        },
 
