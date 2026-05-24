@@ -10,7 +10,7 @@
     "subtitleFontSize": 13,
     "subtitleColor": "#666"
   },
-  "width": 700,
+  "width": 900,
   "height": 380,
   "data": {
     "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/arrivals_spend.csv",
