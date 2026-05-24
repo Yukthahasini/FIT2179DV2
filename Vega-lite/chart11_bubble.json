@@ -1,0 +1,77 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Visitor Arrivals vs Spend per Trip by Country (2025)",
+    "fontSize": 16,
+    "font": "Georgia",
+    "anchor": "start",
+    "color": "#1a4a6b",
+    "subtitle": "Bubble size shows total spend — China is high value despite fewer arrivals than NZ",
+    "subtitleFontSize": 13,
+    "subtitleColor": "#666"
+  },
+  "width": 600,
+  "height": 380,
+  "data": {
+    "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/countries.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"calculate": "toNumber(datum.trips_2025)", "as": "trips_num"},
+    {"calculate": "toNumber(datum.spend_per_trip_2025)", "as": "spend_per_trip_num"},
+    {"calculate": "toNumber(datum.spend_2025_m)", "as": "spend_num"},
+    {"filter": "datum.trips_num > 0"}
+  ],
+  "mark": {
+    "type": "point",
+    "filled": true,
+    "opacity": 0.8
+  },
+  "encoding": {
+    "x": {
+      "field": "trips_num",
+      "type": "quantitative",
+      "title": "Total Arrivals ('000)",
+      "axis": {"titleFontSize": 13, "labelFontSize": 12}
+    },
+    "y": {
+      "field": "spend_per_trip_num",
+      "type": "quantitative",
+      "title": "Spend per Trip (AUD)",
+      "axis": {
+        "titleFontSize": 13,
+        "labelFontSize": 12,
+        "format": ",.0f"
+      }
+    },
+    "size": {
+      "field": "spend_num",
+      "type": "quantitative",
+      "title": "Total Spend ($M)",
+      "scale": {"range": [50, 2000]},
+      "legend": {
+        "titleFontSize": 12,
+        "labelFontSize": 11,
+        "orient": "bottom-right"
+      }
+    },
+    "color": {
+      "field": "country",
+      "type": "nominal",
+      "title": "Country",
+      "scale": {"scheme": "tableau20"},
+      "legend": {
+        "titleFontSize": 12,
+        "labelFontSize": 11,
+        "orient": "right"
+      }
+    },
+    "tooltip": [
+      {"field": "country", "type": "nominal", "title": "Country"},
+      {"field": "trips_num", "type": "quantitative", "title": "Arrivals ('000)", "format": ",.1f"},
+      {"field": "spend_per_trip_num", "type": "quantitative", "title": "Spend per Trip (AUD)", "format": ",.0f"},
+      {"field": "spend_num", "type": "quantitative", "title": "Total Spend ($M)", "format": ",.0f"}
+    ]
+  },
+  "config": {"view": {"stroke": null}}
+}
