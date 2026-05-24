@@ -6,114 +6,230 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Australia's International Tourism</title>
 
-    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.25.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.16.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.22.2"></script>
 
     <style>
 
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            margin: 0;
             font-family: Georgia, serif;
             background-color: #f5efe6;
             color: #1a1a1a;
         }
 
-        .page {
-            max-width: 1100px;
-            margin: auto;
-            padding: 60px 40px;
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: #1a4a6b;
+            padding: 14px 40px;
+            z-index: 100;
+            display: flex;
+            gap: 32px;
+            align-items: center;
         }
 
-        h1 {
-            color: #1a4a6b;
-            font-size: 58px;
-            line-height: 1.05;
+        nav a {
+            color: #c8dff0;
+            font-size: 14px;
+            text-decoration: none;
+            font-family: Georgia, serif;
+            letter-spacing: 0.02em;
+        }
+
+        nav a:hover { color: white; }
+
+        /* Hero */
+        .hero {
+            background: #1a4a6b;
+            color: white;
+            padding: 80px 40px 70px;
+        }
+
+        .hero h1 {
+            font-size: 54px;
+            line-height: 1.08;
+            color: white;
+            max-width: 800px;
             margin-bottom: 20px;
         }
 
-        .subtitle {
-            font-size: 23px;
-            color: #555;
-            margin-bottom: 25px;
+        .hero .subtitle {
+            font-size: 20px;
+            color: #6db3d4;
+            max-width: 620px;
+            margin-bottom: 24px;
+            line-height: 1.5;
         }
 
-        .intro-text {
-            max-width: 850px;
-            font-size: 17px;
+        .hero .intro-text {
+            font-size: 16px;
+            color: #c8dff0;
+            max-width: 680px;
             line-height: 1.7;
-            color: #444;
-            margin-bottom: 55px;
         }
 
-        .section {
-            margin-top: 60px;
+        /* Page */
+        .page {
+            max-width: 1100px;
+            margin: auto;
+            padding: 60px 40px 80px;
         }
+
+        /* Section */
+        .section { margin-top: 70px; }
 
         .section-title {
-            font-size: 32px;
-            color: #1a4a6b;
-            border-left: 8px solid #1a4a6b;
-            padding-left: 14px;
-            margin-bottom: 30px;
+            font-size: 28px;
+            color: white;
+            background: #1a4a6b;
+            padding: 16px 22px;
+            border-radius: 6px;
+            margin-bottom: 12px;
         }
 
+        .section-intro {
+            font-size: 16px;
+            color: #555;
+            max-width: 780px;
+            line-height: 1.65;
+            margin-bottom: 32px;
+            padding-left: 4px;
+        }
+
+        /* KPI Cards */
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 24px;
-            margin-bottom: 35px;
+            margin-bottom: 40px;
         }
 
         .kpi-card {
             background: white;
-            padding: 28px;
+            padding: 32px 24px;
             border-radius: 12px;
             text-align: center;
-            box-shadow: 0px 2px 8px rgba(0,0,0,0.12);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.09);
+            border-top: 4px solid #1a4a6b;
         }
 
         .kpi-card h3 {
             color: #1a4a6b;
-            font-size: 38px;
-            margin: 0;
+            font-size: 42px;
+            margin-bottom: 8px;
         }
 
         .kpi-card p {
-            font-size: 16px;
-            color: #555;
-            margin-top: 8px;
+            font-size: 15px;
+            color: #666;
+            line-height: 1.4;
         }
 
+        .kpi-card .kpi-sub {
+            font-size: 12px;
+            color: #999;
+            margin-top: 6px;
+        }
+
+        /* Chart Container */
         .chart-container {
             background: white;
-            padding: 28px;
+            padding: 32px 32px 24px;
             border-radius: 12px;
-            margin-bottom: 38px;
-            box-shadow: 0px 2px 8px rgba(0,0,0,0.12);
+            margin-bottom: 32px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.09);
         }
 
-        .chart-note {
+        /* Takeaway */
+        .takeaway {
             font-size: 15px;
-            line-height: 1.6;
-            color: #555;
-            margin-top: 15px;
+            font-weight: bold;
+            color: #1a4a6b;
+            background: #eef4fb;
+            border-left: 4px solid #1a4a6b;
+            padding: 10px 14px;
+            margin-bottom: 18px;
+            border-radius: 0 6px 6px 0;
+            max-width: 780px;
+            line-height: 1.5;
         }
 
+        /* Chart Note */
+        .chart-note {
+            font-size: 14px;
+            line-height: 1.65;
+            color: #666;
+            margin-top: 16px;
+            max-width: 780px;
+        }
+
+        /* Two Column */
         .two-column {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 28px;
         }
 
+        /* Placeholder */
         .placeholder {
             border: 2px dashed #cfc7bc;
             border-radius: 10px;
             padding: 55px 20px;
             text-align: center;
-            color: #777;
+            color: #999;
             font-style: italic;
             background-color: #faf7f1;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a4a6b;
+            color: #c8dff0;
+            padding: 50px 40px;
+            margin-top: 80px;
+        }
+
+        footer .footer-grid {
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        footer h4 {
+            color: white;
+            font-size: 15px;
+            margin-bottom: 12px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        footer p {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #9bbdd4;
+        }
+
+        footer a {
+            color: #6db3d4;
+            text-decoration: none;
+        }
+
+        footer a:hover { color: white; }
+
+        footer .footer-bottom {
+            max-width: 1100px;
+            margin: 32px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid #2d6a9a;
+            font-size: 12px;
+            color: #7aabca;
         }
 
     </style>
@@ -122,93 +238,124 @@
 
 <body>
 
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="#section1">The Big Picture</a>
+        <a href="#section2">Who's Coming?</a>
+        <a href="#section3">Where Do They Go?</a>
+        <a href="#section4">What Do They Spend?</a>
+    </nav>
+
+    <!-- HERO BANNER -->
+    <div class="hero">
+        <h1>Australia's International Tourism</h1>
+        <p class="subtitle">Who visits, where they go, and what they spend.</p>
+        <p class="intro-text">
+            International tourism shapes Australia's economy, cities, and communities.
+            In 2025, Australia welcomed 8.9 million international visitors who spent
+            $39.2 billion across the country. This visualisation tells that story —
+            from the countries people come from, to the states they visit,
+            and the value they bring.
+        </p>
+    </div>
+
     <div class="page">
 
-        <h1>Australia's International Tourism</h1>
-
-        <p class="subtitle">
-            Who visits, where they go, and what they spend.
-        </p>
-
-        <p class="intro-text">
-            International tourism plays an important role in Australia’s economy, cities, and regional communities.
-            This visualisation explores visitor arrivals, travel purposes, state destinations, and spending patterns
-            to show how tourism shapes Australia in 2025.
-        </p>
-
         <!-- SECTION 1 -->
-        <section class="section">
+        <section class="section" id="section1">
 
             <h2 class="section-title">The Big Picture</h2>
+
+            <p class="section-intro">
+                Australia's international tourism industry reached a major milestone in 2025.
+                Visitor numbers and spending both hit record highs,
+                driven by strong growth from Asia, Europe and the Americas.
+            </p>
 
             <div class="kpi-grid">
 
                 <div class="kpi-card">
                     <h3>8.9M</h3>
                     <p>International visitors</p>
+                    <p class="kpi-sub">Year ending December 2025</p>
                 </div>
 
                 <div class="kpi-card">
                     <h3>$39.2B</h3>
                     <p>Total visitor spend</p>
+                    <p class="kpi-sub">Year ending December 2025</p>
                 </div>
 
                 <div class="kpi-card">
                     <h3>2.9%</h3>
                     <p>Contribution to GDP</p>
+                    <p class="kpi-sub">Tourism Research Australia, 2023-24</p>
                 </div>
 
             </div>
 
             <div class="chart-container">
-
-                <div id="chart1"></div>
-
-                <p class="chart-note">
-                    Travel purposes show different long-term patterns, with holiday, visiting friends and relatives,
-                    business and education all contributing to Australia’s international visitor mix.
+                <p class="takeaway">
+                    Holiday arrivals have recovered strongly since 2022,
+                    while Education continues to grow as a key purpose of travel.
                 </p>
-
+                <div id="chart1"></div>
+                <p class="chart-note">
+                    Four purposes of travel are shown from 2015 to 2025.
+                    Holiday and visiting friends and relatives dominate the visitor mix.
+                    Business travel remains flat while Education has grown steadily.
+                </p>
             </div>
 
         </section>
 
         <!-- SECTION 2 -->
-        <section class="section">
+        <section class="section" id="section2">
 
-            <h2 class="section-title">Who’s Coming?</h2>
+            <h2 class="section-title">Who's Coming?</h2>
+
+            <p class="section-intro">
+                Australia draws visitors from across the globe.
+                The source country shapes how long visitors stay,
+                why they come, and how much they spend.
+            </p>
 
             <div class="chart-container">
-
-                <div id="chart2"></div>
-
-                <p class="chart-note">
-                    New Zealand remains Australia’s largest source of international visitors in 2025, followed by China,
-                    the United Kingdom and the United States.
+                <p class="takeaway">
+                    New Zealand sends the most visitors but China spends
+                    nearly five times more per trip.
                 </p>
-
+                <div id="chart2"></div>
+                <p class="chart-note">
+                    The top 10 source countries are ranked by total arrivals in 2025.
+                    Hover over each bar to see total spend and spend per trip.
+                </p>
             </div>
 
             <div class="two-column">
 
                 <div class="chart-container">
-
-                    <div id="chart3"></div>
-
-                    <p class="chart-note">
-                        Reasons for travel reveal the different motivations behind visits to Australia.
+                    <p class="takeaway">
+                        Over half of all visitors come for holiday or
+                        to visit friends and relatives.
                     </p>
-
+                    <div id="chart3"></div>
+                    <p class="chart-note">
+                        Each slice shows the proportion of total arrivals
+                        by reason for travel in 2025.
+                    </p>
                 </div>
 
                 <div class="chart-container">
-
-                    <div id="chart4"></div>
-
-                    <p class="chart-note">
-                        Duration of stay helps show whether visitors are making short trips or staying for longer periods.
+                    <p class="takeaway">
+                        Most visitors stay between one and two weeks.
+                        Very few stay longer than three months.
                     </p>
-
+                    <div id="chart4"></div>
+                    <p class="chart-note">
+                        Duration of stay is broken into seven bands
+                        from under one week to six to twelve months.
+                    </p>
                 </div>
 
             </div>
@@ -216,139 +363,180 @@
         </section>
 
         <!-- SECTION 3 -->
-        <section class="section">
+        <section class="section" id="section3">
 
             <h2 class="section-title">Where Do They Go?</h2>
 
+            <p class="section-intro">
+                International visitors are not evenly spread across Australia.
+                NSW and VIC dominate, but the share going to other states
+                has shifted over the past decade.
+            </p>
+
             <div class="chart-container">
-
-                <div class="placeholder">
-                    Chart 5 will go here: Choropleth map of arrivals by state.
-                </div>
-
-                <p class="chart-note">
-                    The map will show how international visitors are distributed across Australian states and territories.
+                <p class="takeaway">
+                    NSW receives the most visitors by far,
+                    driven by Sydney as Australia's main international gateway.
                 </p>
-
+                <div id="chart5"></div>
+                <p class="chart-note">
+                    The map shows international visitor arrivals by state in 2025.
+                    Darker shading indicates more visitors.
+                    Hover over each state to see exact figures.
+                </p>
             </div>
 
             <div class="chart-container">
-
+                <p class="takeaway">
+                    Every state grew in 2025 compared to 2024,
+                    with WA and QLD showing the strongest gains.
+                </p>
                 <div id="chart6"></div>
-
                 <p class="chart-note">
-                    The connected dot plot compares 2024 and 2025 arrivals for each state, making year-on-year change easier to see.
+                    Each state has two dots connected by a line.
+                    The left dot is 2024 and the right dot is 2025.
+                    A longer line means stronger year-on-year growth.
                 </p>
-
             </div>
 
             <div class="chart-container">
-
-                <div id="chart7"></div>
-
-                <p class="chart-note">
-                    Comparing each state's share of total international arrivals across 2015, 2019 and 2025 
-                    reveals how the distribution has shifted over the decade. QLD has steadily grown its share 
-                    while NT has seen a consistent decline.
+                <p class="takeaway">
+                    QLD has steadily grown its share of arrivals
+                    while NT has seen a consistent decline since 2015.
                 </p>
-
+                <div id="chart7"></div>
+                <p class="chart-note">
+                    Each state's share of total arrivals is shown
+                    for 2015, 2019 and 2025.
+                    This reveals which states have grown or lost ground over the decade.
+                </p>
             </div>
 
         </section>
 
         <!-- SECTION 4 -->
-        <section class="section">
+        <section class="section" id="section4">
 
             <h2 class="section-title">What Do They Spend?</h2>
 
+            <p class="section-intro">
+                Visitor spending reveals which markets bring the most economic value.
+                The total amount spent and the spend per trip
+                tell very different stories about visitor value.
+            </p>
+
             <div class="chart-container">
-
-                <div id="chart8"></div>
-
-                <p class="chart-note">
-                    Holiday visitors account for the largest share of total spend, 
-                    but Education visitors spend significantly more per trip than 
-                    any other group — making them extremely high value to Australia's 
-                    tourism economy.
+                <p class="takeaway">
+                    Holiday arrivals dominate in volume but Education
+                    visitors spend significantly more per trip.
                 </p>
-
+                <div id="chart8"></div>
+                <p class="chart-note">
+                    Arrivals by purpose are compared across 2015, 2019 and 2025.
+                    Each group of bars shows how the mix has shifted over the decade.
+                </p>
             </div>
 
             <div class="chart-container">
-
-                <div class="placeholder">
-                    Chart 9 will go here: Total arrivals versus total spend.
-                </div>
-
-                <p class="chart-note">
-                    Comparing arrivals and spending shows whether visitor numbers and economic value move together.
+                <p class="takeaway">
+                    Visitor spend has grown faster than arrivals —
+                    each visitor is worth more to Australia today than in 2015.
                 </p>
-
+                <div id="chart9"></div>
+                <p class="chart-note">
+                    Bars show total annual arrivals and the line shows
+                    total visitor spend. Both are shown from 2015 to 2025.
+                </p>
             </div>
 
             <div class="two-column">
 
                 <div class="chart-container">
-
-                    <div class="placeholder">
-                        Chart 10 will go here: Total annual arrivals, 2015–2025.
-                    </div>
-
-                    <p class="chart-note">
-                        This chart will summarise the overall long-term trend in international arrivals.
+                    <p class="takeaway">
+                        NSW consistently leads all states in arrivals
+                        across every year from 2015 to 2025.
                     </p>
-
+                    <div id="chart10"></div>
+                    <p class="chart-note">
+                        Each cell shows arrivals for one state in one year.
+                        Darker cells mean more visitors that year.
+                    </p>
                 </div>
 
                 <div class="chart-container">
-
-                    <div class="placeholder">
-                        Chart 11 will go here: Spend per trip by top countries.
-                    </div>
-
-                    <p class="chart-note">
-                        Spend per trip highlights which visitor markets provide the highest value per journey.
+                    <p class="takeaway">
+                        Chinese visitors spend over $11,000 per trip —
+                        nearly six times more than New Zealanders.
                     </p>
-
+                    <div id="chart11"></div>
+                    <p class="chart-note">
+                        Each bubble is one country. Position shows arrivals
+                        and spend per trip. Bubble size shows total spend.
+                    </p>
                 </div>
 
             </div>
 
         </section>
-                    <p style="font-size: 13px; color: #999; margin-top: 40px; 
-                    border-top: 1px solid #ddd; padding-top: 16px;">
-                    Generative AI tools were used in this project to assist with 
-                    understanding Vega-Lite concepts, guidance on chart construction, 
-                    and learning how to structure JSON specifications. All design 
-                    decisions, data selection, and storytelling choices are my own.
-                    All data is sourced from the Australian Bureau of Statistics (ABS) 
-                    and Tourism Research Australia (TRA).
-                    <br><br>
-                    Author: Yukthahasini · FIT2179 Data Visualisation 2 · 
-                    Monash University · Semester 1, 2026
-                    </p>
+
     </div>
 
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+
+            <div>
+                <h4>Data Sources</h4>
+                <p>
+                    <a href="https://www.abs.gov.au/statistics/industry/tourism-and-transport/overseas-arrivals-and-departures-australia/latest-release" target="_blank">
+                        Australian Bureau of Statistics — Overseas Arrivals and Departures
+                    </a>
+                    <br><br>
+                    <a href="https://www.tra.gov.au/en/international/international-tourism-results" target="_blank">
+                        Tourism Research Australia — International Visitor Survey Results
+                    </a>
+                    <br><br>
+                    <a href="https://github.com/rowanhogan/australian-states" target="_blank">
+                        Rowan Hogan — Australian States GeoJSON
+                    </a>
+                </p>
+            </div>
+
+            <div>
+                <h4>About This Visualisation</h4>
+                <p>
+                    Designed for the average Australian adult with no specialist knowledge.
+                    All data is publicly available from official Australian government sources.
+                    The most recent available datasets were used throughout.
+                    <br><br>
+                    Generative AI tools were used to assist with understanding
+                    Vega-Lite concepts and chart construction techniques.
+                    All design decisions and storytelling choices are my own.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            FIT2179 Data Visualisation 2 · Monash University · Semester 1, 2026 ·
+            Data: ABS &amp; Tourism Research Australia
+        </div>
+
+    </footer>
+
     <script>
-
         vegaEmbed("#chart1", "Vega-lite/chart1_arrivals_purpose.json", { actions: false });
-
         vegaEmbed("#chart2", "Vega-lite/chart2_countries.json", { actions: false });
-
         vegaEmbed("#chart3", "Vega-lite/chart3_purpose_donut.json", { actions: false });
-
         vegaEmbed("#chart4", "Vega-lite/chart4_duration.json", { actions: false });
-
+        vegaEmbed("#chart5", "Vega-lite/chart5_map.json", { actions: false });
         vegaEmbed("#chart6", "Vega-lite/chart6_states_plot.json", { actions: false });
-
         vegaEmbed("#chart7", "Vega-lite/chart7_state_share.json", { actions: false });
-
         vegaEmbed("#chart8", "Vega-lite/chart8_spend_area.json", { actions: false });
-
-        
-
+        vegaEmbed("#chart9", "Vega-lite/chart9_arrivals_spend.json", { actions: false });
+        vegaEmbed("#chart10", "Vega-lite/chart10_heatmap.json", { actions: false });
+        vegaEmbed("#chart11", "Vega-lite/chart11_bubble.json", { actions: false });
     </script>
 
 </body>
-
 </html>
