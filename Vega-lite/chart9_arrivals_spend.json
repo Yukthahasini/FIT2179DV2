@@ -6,7 +6,7 @@
     "font": "Georgia",
     "anchor": "start",
     "color": "#1a4a6b",
-    "subtitle": "Spend has grown faster than arrivals — visitors are worth more per trip today",
+    "subtitle": "Visitor spending has recovered faster than arrivals since 2021",
     "subtitleFontSize": 13,
     "subtitleColor": "#666"
   },
@@ -29,7 +29,7 @@
         "cornerRadiusTopLeft": 3,
         "cornerRadiusTopRight": 3,
         "color": "#6db3d4",
-        "opacity": 0.85
+        "opacity": 0.55
       },
       "encoding": {
         "x": {
@@ -62,8 +62,10 @@
         "color": "#e8703a",
         "point": {
           "filled": true,
-          "size": 70,
-          "color": "#e8703a"
+          "size": 75,
+          "color": "#e8703a",
+          "stroke": "white",
+          "strokeWidth": 1.2
         }
       },
       "encoding": {
@@ -92,5 +94,7 @@
   "resolve": {
     "scale": {"y": "independent"}
   },
-  "config": {"view": {"stroke": null}}
+  "config": {
+    "view": {"stroke": null}
+  }
 }
