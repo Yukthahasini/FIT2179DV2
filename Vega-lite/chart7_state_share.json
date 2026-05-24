@@ -62,10 +62,7 @@
           "type": "ordinal",
           "title": "Year",
           "sort": ["2015", "2019", "2025"],
-          "axis": {
-            "labelFontSize": 13,
-            "titleFontSize": 13
-          }
+          "axis": {"labelFontSize": 13, "titleFontSize": 13}
         },
         "y": {
           "field": "rank",
@@ -83,7 +80,7 @@
           "type": "nominal",
           "scale": {
             "domain": ["NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"],
-            "range": ["#1a4a6b", "#e8703a", "#6db3d4", "#4a8a4a", "#c8bfb0", "#9b59b6", "#e74c3c", "#f39c12"]
+            "range": ["#0a2d4a", "#c94a0a", "#1a7abf", "#1e6e1e", "#8a6a00", "#5a0a8a", "#b01010", "#c47800"]
           },
           "legend": null
         },
@@ -98,8 +95,8 @@
       "mark": {
         "type": "point",
         "filled": true,
-        "size": 45,
-        "opacity": 0.85
+        "size": 80,
+        "opacity": 1
       },
       "encoding": {
         "x": {
@@ -115,11 +112,10 @@
         "color": {
           "field": "state",
           "type": "nominal",
-          "legend": null
-        },
-        "opacity": {
-          "field": "line_opacity",
-          "type": "quantitative",
+          "scale": {
+            "domain": ["NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"],
+            "range": ["#0a2d4a", "#c94a0a", "#1a7abf", "#1e6e1e", "#8a6a00", "#5a0a8a", "#b01010", "#c47800"]
+          },
           "legend": null
         },
         "tooltip": [
@@ -138,9 +134,7 @@
         "dx": -28,
         "align": "right"
       },
-      "transform": [
-        {"filter": "datum.year_label == '2015'"}
-      ],
+      "transform": [{"filter": "datum.year_label == '2015'"}],
       "encoding": {
         "x": {
           "field": "year_label",
@@ -153,10 +147,13 @@
           "sort": "ascending"
         },
         "text": {"field": "state"},
-        "color": {"field": "state", "type": "nominal", "legend": null},
-        "opacity": {
-          "field": "line_opacity",
-          "type": "quantitative",
+        "color": {
+          "field": "state",
+          "type": "nominal",
+          "scale": {
+            "domain": ["NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"],
+            "range": ["#0a2d4a", "#c94a0a", "#1a7abf", "#1e6e1e", "#8a6a00", "#5a0a8a", "#b01010", "#c47800"]
+          },
           "legend": null
         }
       }
@@ -169,9 +166,7 @@
         "dx": 28,
         "align": "left"
       },
-      "transform": [
-        {"filter": "datum.year_label == '2025'"}
-      ],
+      "transform": [{"filter": "datum.year_label == '2025'"}],
       "encoding": {
         "x": {
           "field": "year_label",
@@ -184,16 +179,17 @@
           "sort": "ascending"
         },
         "text": {"field": "state"},
-        "color": {"field": "state", "type": "nominal", "legend": null},
-        "opacity": {
-          "field": "line_opacity",
-          "type": "quantitative",
+        "color": {
+          "field": "state",
+          "type": "nominal",
+          "scale": {
+            "domain": ["NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"],
+            "range": ["#0a2d4a", "#c94a0a", "#1a7abf", "#1e6e1e", "#8a6a00", "#5a0a8a", "#b01010", "#c47800"]
+          },
           "legend": null
         }
       }
     }
   ],
-  "config": {
-    "view": {"stroke": null}
-  }
+  "config": {"view": {"stroke": null}}
 }
