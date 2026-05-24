@@ -1,0 +1,108 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Total Visitor Spend by State (2025)",
+    "fontSize": 16,
+    "font": "Georgia",
+    "anchor": "start",
+    "color": "#1a4a6b",
+    "subtitle": "NSW leads in spend — but WA attracts high spending visitors relative to its size",
+    "subtitleFontSize": 13,
+    "subtitleColor": "#666"
+  },
+  "width": 420,
+  "height": 380,
+  "projection": {"type": "mercator"},
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.geojson",
+        "format": {"type": "json", "property": "features"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e8f0f7",
+        "stroke": "white",
+        "strokeWidth": 1.5
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/states.csv",
+        "format": {"type": "csv"}
+      },
+      "transform": [
+        {"calculate": "toNumber(datum.spend_2025_m)", "as": "spend_num"},
+        {
+          "calculate": "datum.state_abbr === 'NSW' ? 151.2 : datum.state_abbr === 'VIC' ? 144.9 : datum.state_abbr === 'QLD' ? 144.0 : datum.state_abbr === 'WA' ? 122.0 : datum.state_abbr === 'SA' ? 138.6 : datum.state_abbr === 'TAS' ? 146.5 : datum.state_abbr === 'NT' ? 133.0 : 149.1",
+          "as": "longitude"
+        },
+        {
+          "calculate": "datum.state_abbr === 'NSW' ? -33.5 : datum.state_abbr === 'VIC' ? -37.0 : datum.state_abbr === 'QLD' ? -22.0 : datum.state_abbr === 'WA' ? -25.0 : datum.state_abbr === 'SA' ? -30.0 : datum.state_abbr === 'TAS' ? -42.0 : datum.state_abbr === 'NT' ? -19.0 : -35.5",
+          "as": "latitude"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "opacity": 0.8,
+        "stroke": "white",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        "size": {
+          "field": "spend_num",
+          "type": "quantitative",
+          "title": "Spend ($M)",
+          "scale": {"range": [100, 8000]},
+          "legend": {
+            "titleFontSize": 12,
+            "labelFontSize": 11,
+            "orient": "bottom-right"
+          }
+        },
+        "color": {
+          "field": "spend_num",
+          "type": "quantitative",
+          "scale": {"scheme": "oranges"},
+          "legend": null
+        },
+        "tooltip": [
+          {"field": "state", "type": "nominal", "title": "State"},
+          {"field": "spend_num", "type": "quantitative", "title": "Spend ($M)", "format": ",.0f"},
+          {"field": "trips_2025", "type": "quantitative", "title": "Arrivals ('000)", "format": ",.1f"}
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/states.csv",
+        "format": {"type": "csv"}
+      },
+      "transform": [
+        {
+          "calculate": "datum.state_abbr === 'NSW' ? 151.2 : datum.state_abbr === 'VIC' ? 144.9 : datum.state_abbr === 'QLD' ? 144.0 : datum.state_abbr === 'WA' ? 122.0 : datum.state_abbr === 'SA' ? 138.6 : datum.state_abbr === 'TAS' ? 146.5 : datum.state_abbr === 'NT' ? 133.0 : 149.1",
+          "as": "longitude"
+        },
+        {
+          "calculate": "datum.state_abbr === 'NSW' ? -33.5 : datum.state_abbr === 'VIC' ? -37.0 : datum.state_abbr === 'QLD' ? -22.0 : datum.state_abbr === 'WA' ? -25.0 : datum.state_abbr === 'SA' ? -30.0 : datum.state_abbr === 'TAS' ? -42.0 : datum.state_abbr === 'NT' ? -19.0 : -35.5",
+          "as": "latitude"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "color": "white",
+        "dy": 4
+      },
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        "text": {"field": "state_abbr"}
+      }
+    }
+  ],
+  "config": {"view": {"stroke": null}}
+}
