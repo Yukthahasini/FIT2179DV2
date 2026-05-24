@@ -1,0 +1,96 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Total Arrivals vs Total Visitor Spend (2015–2025)",
+    "fontSize": 16,
+    "font": "Georgia",
+    "anchor": "start",
+    "color": "#1a4a6b",
+    "subtitle": "Spend has grown faster than arrivals — visitors are worth more per trip today",
+    "subtitleFontSize": 13,
+    "subtitleColor": "#666"
+  },
+  "width": 700,
+  "height": 380,
+  "data": {
+    "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/arrivals_spend.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"calculate": "toNumber(datum.year)", "as": "year_num"},
+    {"calculate": "toNumber(datum.total) / 1000000", "as": "arrivals_millions"},
+    {"calculate": "toNumber(datum.spend_m) / 1000", "as": "spend_billions"},
+    {"calculate": "toString(datum.year_num)", "as": "year_label"}
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadiusTopLeft": 3,
+        "cornerRadiusTopRight": 3,
+        "color": "#6db3d4",
+        "opacity": 0.85
+      },
+      "encoding": {
+        "x": {
+          "field": "year_label",
+          "type": "ordinal",
+          "title": "Year",
+          "sort": ["2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025"],
+          "axis": {"labelFontSize": 12, "titleFontSize": 13}
+        },
+        "y": {
+          "field": "arrivals_millions",
+          "type": "quantitative",
+          "title": "Total Arrivals (Millions)",
+          "axis": {
+            "titleFontSize": 13,
+            "labelFontSize": 12,
+            "titleColor": "#6db3d4"
+          }
+        },
+        "tooltip": [
+          {"field": "year_label", "type": "ordinal", "title": "Year"},
+          {"field": "arrivals_millions", "type": "quantitative", "title": "Arrivals (M)", "format": ".2f"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3,
+        "color": "#e8703a",
+        "point": {
+          "filled": true,
+          "size": 70,
+          "color": "#e8703a"
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "year_label",
+          "type": "ordinal",
+          "sort": ["2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025"]
+        },
+        "y": {
+          "field": "spend_billions",
+          "type": "quantitative",
+          "title": "Total Visitor Spend ($B)",
+          "axis": {
+            "titleFontSize": 13,
+            "labelFontSize": 12,
+            "titleColor": "#e8703a"
+          }
+        },
+        "tooltip": [
+          {"field": "year_label", "type": "ordinal", "title": "Year"},
+          {"field": "spend_billions", "type": "quantitative", "title": "Spend ($B)", "format": ".1f"}
+        ]
+      }
+    }
+  ],
+  "resolve": {
+    "scale": {"y": "independent"}
+  },
+  "config": {"view": {"stroke": null}}
+}
