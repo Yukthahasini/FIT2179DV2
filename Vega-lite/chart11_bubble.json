@@ -6,12 +6,12 @@
     "font": "Georgia",
     "anchor": "start",
     "color": "#1a4a6b",
-    "subtitle": "Bubble size shows total spend — China is high value despite fewer arrivals than NZ",
+    "subtitle": "Bubble size shows total spend",
     "subtitleFontSize": 13,
     "subtitleColor": "#666"
   },
-  "width": 600,
-  "height": 380,
+  "width": 430,
+  "height": 320,
   "data": {
     "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/countries.csv",
     "format": {"type": "csv"}
@@ -25,46 +25,37 @@
   "mark": {
     "type": "point",
     "filled": true,
-    "opacity": 0.8
+    "opacity": 0.75
   },
   "encoding": {
     "x": {
       "field": "trips_num",
       "type": "quantitative",
-      "title": "Total Arrivals ('000)",
-      "axis": {"titleFontSize": 13, "labelFontSize": 12}
+      "title": "Arrivals ('000)",
+      "axis": {"titleFontSize": 12, "labelFontSize": 11}
     },
     "y": {
       "field": "spend_per_trip_num",
       "type": "quantitative",
       "title": "Spend per Trip (AUD)",
-      "axis": {
-        "titleFontSize": 13,
-        "labelFontSize": 12,
-        "format": ",.0f"
-      }
+      "axis": {"titleFontSize": 12, "labelFontSize": 11, "format": ",.0f"}
     },
     "size": {
       "field": "spend_num",
       "type": "quantitative",
       "title": "Total Spend ($M)",
-      "scale": {"range": [50, 2000]},
+      "scale": {"range": [40, 1200]},
       "legend": {
-        "titleFontSize": 12,
-        "labelFontSize": 11,
-        "orient": "bottom-right"
+        "orient": "bottom",
+        "titleFontSize": 11,
+        "labelFontSize": 10
       }
     },
     "color": {
       "field": "country",
       "type": "nominal",
-      "title": "Country",
-      "scale": {"scheme": "tableau20"},
-      "legend": {
-        "titleFontSize": 12,
-        "labelFontSize": 11,
-        "orient": "right"
-      }
+      "legend": null,
+      "scale": {"scheme": "tableau20"}
     },
     "tooltip": [
       {"field": "country", "type": "nominal", "title": "Country"},
@@ -73,5 +64,7 @@
       {"field": "spend_num", "type": "quantitative", "title": "Total Spend ($M)", "format": ",.0f"}
     ]
   },
-  "config": {"view": {"stroke": null}}
+  "config": {
+    "view": {"stroke": null}
+  }
 }
