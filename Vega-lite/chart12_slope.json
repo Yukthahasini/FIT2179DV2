@@ -1,0 +1,193 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Country Rankings by Arrivals: 2024 vs 2025",
+    "fontSize": 16,
+    "font": "Georgia",
+    "anchor": "start",
+    "color": "#1a4a6b",
+    "subtitle": "Most countries held their position — but some markets shifted noticeably",
+    "subtitleFontSize": 13,
+    "subtitleColor": "#666"
+  },
+  "width": 900,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/countries.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"calculate": "toNumber(datum.trips_2024)", "as": "trips_2024_num"},
+    {"calculate": "toNumber(datum.trips_2025)", "as": "trips_2025_num"},
+    {"filter": "datum.trips_2025_num > 0"},
+    {
+      "window": [{"op": "rank", "as": "rank_2024"}],
+      "sort": [{"field": "trips_2024_num", "order": "descending"}]
+    },
+    {
+      "window": [{"op": "rank", "as": "rank_2025"}],
+      "sort": [{"field": "trips_2025_num", "order": "descending"}]
+    },
+    {"filter": "datum.rank_2025 <= 10"},
+    {
+      "fold": ["rank_2024", "rank_2025"],
+      "as": ["year_key", "rank"]
+    },
+    {
+      "calculate": "datum.year_key === 'rank_2024' ? '2024' : '2025'",
+      "as": "year_label"
+    },
+    {
+      "calculate": "datum.rank_2025 < datum.rank_2024 ? 'rose' : datum.rank_2025 > datum.rank_2024 ? 'fell' : 'same'",
+      "as": "direction"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2.5
+      },
+      "encoding": {
+        "x": {
+          "field": "year_label",
+          "type": "ordinal",
+          "title": null,
+          "sort": ["2024", "2025"],
+          "axis": {
+            "labelFontSize": 14,
+            "labelFontWeight": "bold",
+            "domain": false,
+            "ticks": false
+          }
+        },
+        "y": {
+          "field": "rank",
+          "type": "ordinal",
+          "title": "Rank (1 = most visitors)",
+          "sort": "ascending",
+          "axis": {
+            "titleFontSize": 13,
+            "labelFontSize": 12,
+            "values": [1,2,3,4,5,6,7,8,9,10]
+          }
+        },
+        "color": {
+          "field": "direction",
+          "type": "nominal",
+          "scale": {
+            "domain": ["rose", "fell", "same"],
+            "range": ["#1e6e1e", "#b01010", "#aaaaaa"]
+          },
+          "legend": {
+            "title": "Rank Change",
+            "titleFontSize": 12,
+            "labelFontSize": 12,
+            "orient": "bottom",
+            "labelExpr": "datum.label === 'rose' ? 'Rose in ranking' : datum.label === 'fell' ? 'Fell in ranking' : 'No change'"
+          }
+        },
+        "detail": {"field": "country", "type": "nominal"}
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 80
+      },
+      "encoding": {
+        "x": {
+          "field": "year_label",
+          "type": "ordinal",
+          "sort": ["2024", "2025"]
+        },
+        "y": {
+          "field": "rank",
+          "type": "ordinal",
+          "sort": "ascending"
+        },
+        "color": {
+          "field": "direction",
+          "type": "nominal",
+          "scale": {
+            "domain": ["rose", "fell", "same"],
+            "range": ["#1e6e1e", "#b01010", "#aaaaaa"]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          {"field": "country", "type": "nominal", "title": "Country"},
+          {"field": "year_label", "type": "ordinal", "title": "Year"},
+          {"field": "rank", "type": "ordinal", "title": "Rank"},
+          {"field": "direction", "type": "nominal", "title": "Change"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "dx": -30,
+        "align": "right"
+      },
+      "transform": [{"filter": "datum.year_label == '2024'"}],
+      "encoding": {
+        "x": {
+          "field": "year_label",
+          "type": "ordinal",
+          "sort": ["2024", "2025"]
+        },
+        "y": {
+          "field": "rank",
+          "type": "ordinal",
+          "sort": "ascending"
+        },
+        "text": {"field": "country"},
+        "color": {
+          "field": "direction",
+          "type": "nominal",
+          "scale": {
+            "domain": ["rose", "fell", "same"],
+            "range": ["#1e6e1e", "#b01010", "#aaaaaa"]
+          },
+          "legend": null
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "dx": 30,
+        "align": "left"
+      },
+      "transform": [{"filter": "datum.year_label == '2025'"}],
+      "encoding": {
+        "x": {
+          "field": "year_label",
+          "type": "ordinal",
+          "sort": ["2024", "2025"]
+        },
+        "y": {
+          "field": "rank",
+          "type": "ordinal",
+          "sort": "ascending"
+        },
+        "text": {"field": "country"},
+        "color": {
+          "field": "direction",
+          "type": "nominal",
+          "scale": {
+            "domain": ["rose", "fell", "same"],
+            "range": ["#1e6e1e", "#b01010", "#aaaaaa"]
+          },
+          "legend": null
+        }
+      }
+    }
+  ],
+  "config": {"view": {"stroke": null}}
+}
