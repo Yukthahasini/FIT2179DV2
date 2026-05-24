@@ -11,7 +11,7 @@
     "subtitleColor": "#666"
   },
   "width": 900,
-  "height": 320,
+  "height": 360,
   "data": {
     "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/countries.csv",
     "format": {"type": "csv"}
