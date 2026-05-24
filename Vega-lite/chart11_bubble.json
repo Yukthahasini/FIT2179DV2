@@ -10,7 +10,7 @@
     "subtitleFontSize": 13,
     "subtitleColor": "#666"
   },
-  "width": 430,
+  "width": 900,
   "height": 320,
   "data": {
     "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/countries.csv",
