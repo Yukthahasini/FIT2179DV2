@@ -14,13 +14,25 @@
   "height": 350,
   "data": {
     "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/arrivals_trend.csv",
-    "format": {"type": "csv"}
+    "format": {
+      "type": "csv"
+    }
   },
   "transform": [
-    {"filter": "datum.year >= 2015 && datum.year <= 2025"},
     {
-      "fold": ["holiday", "vfr", "business", "education"],
-      "as": ["purpose", "arrivals"]
+      "filter": "datum.year >= 2015 && datum.year <= 2025"
+    },
+    {
+      "fold": [
+        "holiday",
+        "vfr",
+        "business",
+        "education"
+      ],
+      "as": [
+        "purpose",
+        "arrivals"
+      ]
     },
     {
       "calculate": "datum.purpose === 'holiday' ? 'Holiday' : datum.purpose === 'vfr' ? 'Visiting Friends & Relatives' : datum.purpose === 'business' ? 'Business' : 'Education'",
@@ -38,14 +50,18 @@
           "name": "hover_purpose",
           "select": {
             "type": "point",
-            "fields": ["purpose_label"],
-            "on": "mouseover"
+            "fields": [
+              "purpose_label"
+            ],
+            "on": "click"
           }
         }
       ],
       "mark": {
         "type": "line",
-        "point": {"size": 60},
+        "point": {
+          "size": 60
+        },
         "strokeWidth": 2.5
       },
       "encoding": {
@@ -53,21 +69,37 @@
           "field": "year",
           "type": "ordinal",
           "title": "Year",
-          "axis": {"labelFontSize": 12, "titleFontSize": 13}
+          "axis": {
+            "labelFontSize": 12,
+            "titleFontSize": 13
+          }
         },
         "y": {
           "field": "arrivals_millions",
           "type": "quantitative",
           "title": "Arrivals (Millions)",
-          "axis": {"labelFontSize": 12, "titleFontSize": 13}
+          "axis": {
+            "labelFontSize": 12,
+            "titleFontSize": 13
+          }
         },
         "color": {
           "field": "purpose_label",
           "type": "nominal",
           "title": "Purpose",
           "scale": {
-            "domain": ["Holiday", "Visiting Friends & Relatives", "Business", "Education"],
-            "range": ["#1a4a6b", "#e8703a", "#6db3d4", "#4a8a4a"]
+            "domain": [
+              "Holiday",
+              "Visiting Friends & Relatives",
+              "Business",
+              "Education"
+            ],
+            "range": [
+              "#1a4a6b",
+              "#e8703a",
+              "#6db3d4",
+              "#4a8a4a"
+            ]
           },
           "legend": {
             "orient": "right",
@@ -76,32 +108,59 @@
           }
         },
         "opacity": {
-          "condition": {"param": "hover_purpose", "value": 1},
+          "condition": {
+            "param": "hover_purpose",
+            "value": 1
+          },
           "value": 0.2
         },
         "strokeWidth": {
-          "condition": {"param": "hover_purpose", "value": 4},
+          "condition": {
+            "param": "hover_purpose",
+            "value": 4
+          },
           "value": 2
         },
         "tooltip": [
-          {"field": "year", "type": "ordinal", "title": "Year"},
-          {"field": "purpose_label", "type": "nominal", "title": "Purpose"},
-          {"field": "arrivals_millions", "type": "quantitative", "title": "Arrivals (M)", "format": ".2f"}
+          {
+            "field": "year",
+            "type": "ordinal",
+            "title": "Year"
+          },
+          {
+            "field": "purpose_label",
+            "type": "nominal",
+            "title": "Purpose"
+          },
+          {
+            "field": "arrivals_millions",
+            "type": "quantitative",
+            "title": "Arrivals (M)",
+            "format": ".2f"
+          }
         ]
       }
     },
     {
       "mark": {
         "type": "rule",
-        "strokeDash": [4, 3],
+        "strokeDash": [
+          4,
+          3
+        ],
         "strokeWidth": 1.5,
         "color": "#aaa"
       },
       "transform": [
-        {"filter": "datum.year == 2021 && datum.purpose_label == 'Holiday'"}
+        {
+          "filter": "datum.year == 2021 && datum.purpose_label == 'Holiday'"
+        }
       ],
       "encoding": {
-        "x": {"field": "year", "type": "ordinal"}
+        "x": {
+          "field": "year",
+          "type": "ordinal"
+        }
       }
     },
     {
@@ -114,14 +173,27 @@
         "color": "#999"
       },
       "transform": [
-        {"filter": "datum.year == 2021 && datum.purpose_label == 'Holiday'"}
+        {
+          "filter": "datum.year == 2021 && datum.purpose_label == 'Holiday'"
+        }
       ],
       "encoding": {
-        "x": {"field": "year", "type": "ordinal"},
-        "y": {"value": 10},
-        "text": {"value": "Arrivals at lowest"}
+        "x": {
+          "field": "year",
+          "type": "ordinal"
+        },
+        "y": {
+          "value": 10
+        },
+        "text": {
+          "value": "Arrivals at lowest"
+        }
       }
     }
   ],
-  "config": {"view": {"stroke": null}}
+  "config": {
+    "view": {
+      "stroke": null
+    }
+  }
 }
