@@ -60,18 +60,21 @@
         "format": ",.0f"
       }
     },
-    "size": {
-      "field": "spend_num",
-      "type": "quantitative",
-      "title": "Total Spend ($M)",
-      "scale": {
-        "range": [40, 1200]
-      },
-      "legend": {
-        "orient": "bottom",
-        "titleFontSize": 11,
-        "labelFontSize": 10
-      }
+"size": {
+  "field": "spend_num",
+  "type": "quantitative",
+  "title": "Total Spend ($M)",
+  "scale": {
+    "domain": [0, 12000],
+    "range": [40, 1200]
+  },
+  "legend": {
+    "orient": "bottom",
+    "titleFontSize": 11,
+    "labelFontSize": 10,
+    "values": [0, 2000, 4000, 6000, 8000, 10000, 12000]
+  }
+}
     },
     "color": {
       "value": "#6baed6"
