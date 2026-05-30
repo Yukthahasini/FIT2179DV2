@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Country Rankings by Arrivals: 2024 vs 2025",
+    "text": "Country Rankings by Arrivals (2024–2025)",
     "fontSize": 16,
     "font": "Georgia",
     "anchor": "start",
@@ -66,7 +66,7 @@
           "axis": {
             "titleFontSize": 13,
             "labelFontSize": 12,
-            "values": [1,2,3,4,5,6,7,8,9,10]
+            "values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
           }
         },
         "color": {
@@ -74,13 +74,19 @@
           "type": "nominal",
           "scale": {
             "domain": ["rose", "fell", "same"],
-            "range": ["#1e6e1e", "#b01010", "#aaaaaa"]
+            "range": ["#1e6e1e", "#b01010", "#8f8f8f"]
           },
           "legend": {
             "title": "Rank Change",
-            "titleFontSize": 12,
-            "labelFontSize": 12,
+            "titleFontSize": 14,
+            "labelFontSize": 13,
+            "titleColor": "#222222",
+            "labelColor": "#222222",
             "orient": "bottom",
+            "direction": "horizontal",
+            "padding": 12,
+            "symbolStrokeWidth": 3,
+            "symbolSize": 180,
             "labelExpr": "datum.label === 'rose' ? 'Rose in ranking' : datum.label === 'fell' ? 'Fell in ranking' : 'No change'"
           }
         },
@@ -109,7 +115,7 @@
           "type": "nominal",
           "scale": {
             "domain": ["rose", "fell", "same"],
-            "range": ["#1e6e1e", "#b01010", "#aaaaaa"]
+            "range": ["#1e6e1e", "#b01010", "#8f8f8f"]
           },
           "legend": null
         },
@@ -147,7 +153,7 @@
           "type": "nominal",
           "scale": {
             "domain": ["rose", "fell", "same"],
-            "range": ["#1e6e1e", "#b01010", "#aaaaaa"]
+            "range": ["#1e6e1e", "#b01010", "#8f8f8f"]
           },
           "legend": null
         }
@@ -179,12 +185,14 @@
           "type": "nominal",
           "scale": {
             "domain": ["rose", "fell", "same"],
-            "range": ["#1e6e1e", "#b01010", "#aaaaaa"]
+            "range": ["#1e6e1e", "#b01010", "#8f8f8f"]
           },
           "legend": null
         }
       }
     }
   ],
-  "config": {"view": {"stroke": null}}
+  "config": {
+    "view": {"stroke": null}
+  }
 }
