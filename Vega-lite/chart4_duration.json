@@ -14,9 +14,7 @@
   "height": 320,
   "data": {
     "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/duration.csv",
-    "format": {
-      "type": "csv"
-    }
+    "format": {"type": "csv"}
   },
   "transform": [
     {
@@ -28,116 +26,25 @@
       "as": "arrivals_m"
     }
   ],
-  "layer": [
-    {
-      "params": [
-        {
-          "name": "hover_bar",
-          "select": {
-            "type": "point",
-            "fields": [
-              "duration_label"
-            ],
-            "on": "click"
-          }
-        }
-      ],
-      "mark": {
-        "type": "bar",
-        "cornerRadiusEnd": 4,
-        "color": "#6db3d4"
-      },
-      "encoding": {
-        "y": {
-          "field": "duration_label",
-          "type": "ordinal",
-          "sort": [
-            "Under 1 week",
-            "1–2 weeks",
-            "2 weeks–1 month",
-            "1–2 months",
-            "2–3 months",
-            "3–6 months",
-            "6–12 months"
-          ],
-          "title": null,
-          "axis": {
-            "labelFontSize": 11
-          }
-        },
-        "x": {
-          "field": "arrivals_m",
-          "type": "quantitative",
-          "title": "Arrivals (Millions)",
-          "axis": {
-            "titleFontSize": 12,
-            "labelFontSize": 11
-          }
-        },
-        "opacity": {
-          "condition": {
-            "param": "hover_bar",
-            "value": 1
-          },
-          "value": 0.5
-        },
-        "tooltip": [
-          {
-            "field": "duration_label",
-            "type": "nominal",
-            "title": "Duration"
-          },
-          {
-            "field": "arrivals_m",
-            "type": "quantitative",
-            "title": "Arrivals (M)",
-            "format": ".2f"
-          }
-        ]
-      }
+  "mark": {"type": "bar", "cornerRadiusEnd": 4, "color": "#6db3d4"},
+  "encoding": {
+    "y": {
+      "field": "duration_label",
+      "type": "ordinal",
+      "sort": ["Under 1 wk", "1–2 wks", "2 wks– 1 mon", "1–2 mons", "2–3 mons", "3–6 mons", " +6 mons"],
+      "title": null,
+      "axis": {"labelFontSize": 11}
     },
-    {
-      "mark": {
-        "type": "text",
-        "align": "left",
-        "dx": 6,
-        "fontSize": 11,
-        "fontWeight": "bold",
-        "fontStyle": "italic",
-        "color": "#1a4a6b"
-      },
-      "transform": [
-        {
-          "filter": "datum.duration_band === '1_to_2_weeks'"
-        }
-      ],
-      "encoding": {
-        "y": {
-          "field": "duration_label",
-          "type": "ordinal",
-          "sort": [
-            "Under 1 week",
-            "1–2 weeks",
-            "2 weeks–1 month",
-            "1–2 months",
-            "2–3 months",
-            "3–6 months",
-            "6–12 months"
-          ]
-        },
-        "x": {
-          "field": "arrivals_m",
-          "type": "quantitative"
-        },
-        "text": {
-          "value": "Most common stay time"
-        }
-      }
-    }
-  ],
-  "config": {
-    "view": {
-      "stroke": null
-    }
+    "x": {
+      "field": "arrivals_m",
+      "type": "quantitative",
+      "title": "Arrivals (Millions)",
+      "axis": {"titleFontSize": 12, "labelFontSize": 11}
+    },
+    "tooltip": [
+      {"field": "duration_label", "type": "nominal", "title": "Duration"},
+      {"field": "arrivals_m", "type": "quantitative", "title": "Arrivals (M)", "format": ".2f"}
+    ]
   }
 }
+
