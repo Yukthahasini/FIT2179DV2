@@ -14,14 +14,16 @@
   "height": 320,
   "data": {
     "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/purpose.csv",
-    "format": {
-      "type": "csv"
-    }
+    "format": {"type": "csv"}
   },
   "transform": [
     {
       "calculate": "datum.purpose === 'Visiting friends and relatives' ? 'VFR' : datum.purpose === 'Other Reason' ? 'Other' : datum.purpose",
       "as": "purpose_short"
+    },
+    {
+      "calculate": "datum.purpose_short === 'Holiday' ? 1 : datum.purpose_short === 'VFR' ? 2 : datum.purpose_short === 'Business' ? 3 : datum.purpose_short === 'Education' ? 4 : datum.purpose_short === 'Employment' ? 5 : 6",
+      "as": "purpose_order"
     },
     {
       "calculate": "toNumber(datum.trips_2025)",
@@ -48,9 +50,7 @@
           "name": "hover_slice",
           "select": {
             "type": "point",
-            "fields": [
-              "purpose_short"
-            ],
+            "fields": ["purpose_short"],
             "on": "click"
           }
         }
@@ -65,27 +65,18 @@
           "field": "trips",
           "type": "quantitative"
         },
+        "order": {
+          "field": "purpose_order",
+          "type": "quantitative",
+          "sort": "ascending"
+        },
         "color": {
           "field": "purpose_short",
           "type": "nominal",
           "title": "Purpose",
           "scale": {
-            "domain": [
-              "Holiday",
-              "VFR",
-              "Business",
-              "Education",
-              "Employment",
-              "Other"
-            ],
-            "range": [
-              "#1f4e79",
-              "#ff7f50",
-              "#5dade2",
-              "#58a55c",
-              "#d2b48c",
-              "#8c8c8c"
-            ]
+            "domain": ["Holiday", "VFR", "Business", "Education", "Employment", "Other"],
+            "range": ["#1f4e79", "#ff7f50", "#5dade2", "#58a55c", "#d2b48c", "#8c8c8c"]
           },
           "legend": {
             "titleFontSize": 12,
@@ -101,22 +92,9 @@
           "value": 0.25
         },
         "tooltip": [
-          {
-            "field": "purpose_short",
-            "type": "nominal",
-            "title": "Purpose"
-          },
-          {
-            "field": "trips",
-            "type": "quantitative",
-            "title": "Arrivals ('000)",
-            "format": ",.1f"
-          },
-          {
-            "field": "pct_label",
-            "type": "nominal",
-            "title": "Share"
-          }
+          {"field": "purpose_short", "type": "nominal", "title": "Purpose"},
+          {"field": "trips", "type": "quantitative", "title": "Arrivals ('000)", "format": ",.1f"},
+          {"field": "pct_label", "type": "nominal", "title": "Share"}
         ]
       }
     },
@@ -133,6 +111,11 @@
           "type": "quantitative",
           "stack": true
         },
+        "order": {
+          "field": "purpose_order",
+          "type": "quantitative",
+          "sort": "ascending"
+        },
         "text": {
           "field": "pct_label",
           "type": "nominal"
@@ -141,22 +124,8 @@
           "field": "purpose_short",
           "type": "nominal",
           "scale": {
-            "domain": [
-              "Holiday",
-              "VFR",
-              "Business",
-              "Education",
-              "Employment",
-              "Other"
-            ],
-            "range": [
-              "#1f4e79",
-              "#ff7f50",
-              "#5dade2",
-              "#58a55c",
-              "#d2b48c",
-              "#8c8c8c"
-            ]
+            "domain": ["Holiday", "VFR", "Business", "Education", "Employment", "Other"],
+            "range": ["#1f4e79", "#ff7f50", "#5dade2", "#58a55c", "#d2b48c", "#8c8c8c"]
           },
           "legend": null
         }
@@ -178,15 +147,9 @@
         }
       ],
       "encoding": {
-        "text": {
-          "value": "Holiday"
-        },
-        "x": {
-          "value": 210
-        },
-        "y": {
-          "value": 160
-        }
+        "text": {"value": "Holiday"},
+        "x": {"value": 210},
+        "y": {"value": 160}
       }
     },
     {
@@ -204,15 +167,9 @@
         }
       ],
       "encoding": {
-        "text": {
-          "value": "leads all purposes"
-        },
-        "x": {
-          "value": 210
-        },
-        "y": {
-          "value": 160
-        }
+        "text": {"value": "leads all purposes"},
+        "x": {"value": 210},
+        "y": {"value": 160}
       }
     }
   ],
