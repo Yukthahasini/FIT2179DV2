@@ -407,18 +407,6 @@
                     </p>
                 </div>
 
-                <div class="chart-container">
-                    <p class="takeaway">
-                        NSW also leads in total visitor spend,
-                        but WA punches above its weight relative to arrivals.
-                    </p>
-                    <div id="chart5b"></div>
-                    <p class="chart-note">
-                        Each circle is sized by total visitor spend in that state.
-                        Larger circles mean more spending, not necessarily more visitors.
-                    </p>
-                </div>
-
             </div>
 
             <div class="chart-container">
@@ -556,12 +544,11 @@
     </footer>
 
     <script>
-        vegaEmbed("#chart1",  "Vega-lite/chart1_arrivals_purpose.json",  { actions: false });
+        vegaEmbed("#chart1",  "Vega-lite/chart1_arrivals_purpose.json",   { actions: false });
         vegaEmbed("#chart2",  "Vega-lite/chart2_countries.json",          { actions: false });
         vegaEmbed("#chart3",  "Vega-lite/chart3_purpose_donut.json",      { actions: false });
         vegaEmbed("#chart4",  "Vega-lite/chart4_duration.json",           { actions: false });
         vegaEmbed("#chart5",  "Vega-lite/chart5_map.json",                { actions: false });
-        vegaEmbed("#chart5b", "Vega-lite/chart5b_symbol_map.json",        { actions: false });
         vegaEmbed("#chart6",  "Vega-lite/chart6_states_plot.json",        { actions: false });
         vegaEmbed("#chart7",  "Vega-lite/chart7_state_share.json",        { actions: false });
         vegaEmbed("#chart8",  "Vega-lite/chart8_grouped_bar.json",        { actions: false });
