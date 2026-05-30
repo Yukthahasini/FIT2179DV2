@@ -6,10 +6,7 @@
     "fontSize": 16,
     "font": "Georgia",
     "anchor": "start",
-    "color": "#1a4a6b",
-    "subtitle": "New Zealand leads in arrivals, while China dominates in total spend",
-    "subtitleFontSize": 13,
-    "subtitleColor": "#666"
+    "color": "#1a4a6b"
   },
 
   "width": 900,
