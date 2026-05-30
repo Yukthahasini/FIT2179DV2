@@ -31,66 +31,97 @@
       "as": "arrivals_millions"
     }
   ],
-  "mark": {
-    "type": "line",
-    "point": true,
-    "strokeWidth": 2.5
-  },
-  "encoding": {
-    "x": {
-      "field": "year",
-      "type": "ordinal",
-      "title": "Year",
-      "axis": {
-        "labelFontSize": 12,
-        "titleFontSize": 13
+  "layer": [
+    {
+      "params": [
+        {
+          "name": "hover_purpose",
+          "select": {
+            "type": "point",
+            "fields": ["purpose_label"],
+            "on": "mouseover"
+          }
+        }
+      ],
+      "mark": {
+        "type": "line",
+        "point": {"size": 60},
+        "strokeWidth": 2.5
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "title": "Year",
+          "axis": {"labelFontSize": 12, "titleFontSize": 13}
+        },
+        "y": {
+          "field": "arrivals_millions",
+          "type": "quantitative",
+          "title": "Arrivals (Millions)",
+          "axis": {"labelFontSize": 12, "titleFontSize": 13}
+        },
+        "color": {
+          "field": "purpose_label",
+          "type": "nominal",
+          "title": "Purpose",
+          "scale": {
+            "domain": ["Holiday", "Visiting Friends & Relatives", "Business", "Education"],
+            "range": ["#1a4a6b", "#e8703a", "#6db3d4", "#4a8a4a"]
+          },
+          "legend": {
+            "orient": "right",
+            "titleFontSize": 12,
+            "labelFontSize": 12
+          }
+        },
+        "opacity": {
+          "condition": {"param": "hover_purpose", "value": 1},
+          "value": 0.2
+        },
+        "strokeWidth": {
+          "condition": {"param": "hover_purpose", "value": 4},
+          "value": 2
+        },
+        "tooltip": [
+          {"field": "year", "type": "ordinal", "title": "Year"},
+          {"field": "purpose_label", "type": "nominal", "title": "Purpose"},
+          {"field": "arrivals_millions", "type": "quantitative", "title": "Arrivals (M)", "format": ".2f"}
+        ]
       }
     },
-    "y": {
-      "field": "arrivals_millions",
-      "type": "quantitative",
-      "title": "Arrivals (Millions)",
-      "axis": {
-        "labelFontSize": 12,
-        "titleFontSize": 13
+    {
+      "mark": {
+        "type": "rule",
+        "strokeDash": [4, 3],
+        "strokeWidth": 1.5,
+        "color": "#aaa"
+      },
+      "transform": [
+        {"filter": "datum.year == 2021 && datum.purpose_label == 'Holiday'"}
+      ],
+      "encoding": {
+        "x": {"field": "year", "type": "ordinal"}
       }
     },
-    "color": {
-      "field": "purpose_label",
-      "type": "nominal",
-      "title": "Purpose",
-      "scale": {
-        "domain": ["Holiday", "Visiting Friends & Relatives", "Business", "Education"],
-        "range": ["#1a4a6b", "#e8703a", "#6db3d4", "#4a8a4a"]
+    {
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "dy": -10,
+        "fontSize": 10,
+        "fontStyle": "italic",
+        "color": "#999"
       },
-      "legend": {
-        "orient": "right",
-        "titleFontSize": 12,
-        "labelFontSize": 12
+      "transform": [
+        {"filter": "datum.year == 2021 && datum.purpose_label == 'Holiday'"}
+      ],
+      "encoding": {
+        "x": {"field": "year", "type": "ordinal"},
+        "y": {"value": 10},
+        "text": {"value": "Arrivals at lowest"}
       }
-    },
-    "tooltip": [
-      {
-        "field": "year",
-        "type": "ordinal",
-        "title": "Year"
-      },
-      {
-        "field": "purpose_label",
-        "type": "nominal",
-        "title": "Purpose"
-      },
-      {
-        "field": "arrivals_millions",
-        "type": "quantitative",
-        "title": "Arrivals (M)",
-        "format": ".2f"
-      }
-    ]
-  },
-  "config": {
-    "view": {
-      "stroke": null
     }
-  }
+  ],
+  "config": {"view": {"stroke": null}}
 }
