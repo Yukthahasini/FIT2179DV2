@@ -17,34 +17,56 @@
     "format": {"type": "csv"}
   },
   "transform": [
-    {"calculate": "toNumber(datum.trips_2025)", "as": "trips_num"},
-    {"calculate": "toNumber(datum.spend_per_trip_2025)", "as": "spend_per_trip_num"},
-    {"calculate": "toNumber(datum.spend_2025_m)", "as": "spend_num"},
-    {"filter": "datum.trips_num > 0"}
+    {
+      "calculate": "toNumber(datum.trips_2025)",
+      "as": "trips_num"
+    },
+    {
+      "calculate": "toNumber(datum.spend_per_trip_2025)",
+      "as": "spend_per_trip_num"
+    },
+    {
+      "calculate": "toNumber(datum.spend_2025_m)",
+      "as": "spend_num"
+    },
+    {
+      "filter": "datum.trips_num > 0"
+    }
   ],
   "mark": {
     "type": "point",
     "filled": true,
-    "opacity": 0.75
+    "opacity": 0.85,
+    "stroke": "white",
+    "strokeWidth": 1
   },
   "encoding": {
     "x": {
       "field": "trips_num",
       "type": "quantitative",
       "title": "Arrivals ('000)",
-      "axis": {"titleFontSize": 12, "labelFontSize": 11}
+      "axis": {
+        "titleFontSize": 12,
+        "labelFontSize": 11
+      }
     },
     "y": {
       "field": "spend_per_trip_num",
       "type": "quantitative",
       "title": "Spend per Trip (AUD)",
-      "axis": {"titleFontSize": 12, "labelFontSize": 11, "format": ",.0f"}
+      "axis": {
+        "titleFontSize": 12,
+        "labelFontSize": 11,
+        "format": ",.0f"
+      }
     },
     "size": {
       "field": "spend_num",
       "type": "quantitative",
       "title": "Total Spend ($M)",
-      "scale": {"range": [40, 1200]},
+      "scale": {
+        "range": [40, 1200]
+      },
       "legend": {
         "orient": "bottom",
         "titleFontSize": 11,
@@ -52,19 +74,37 @@
       }
     },
     "color": {
-      "field": "country",
-      "type": "nominal",
-      "legend": null,
-      "scale": {"scheme": "tableau20"}
+      "value": "#6baed6"
     },
     "tooltip": [
-      {"field": "country", "type": "nominal", "title": "Country"},
-      {"field": "trips_num", "type": "quantitative", "title": "Arrivals ('000)", "format": ",.1f"},
-      {"field": "spend_per_trip_num", "type": "quantitative", "title": "Spend per Trip (AUD)", "format": ",.0f"},
-      {"field": "spend_num", "type": "quantitative", "title": "Total Spend ($M)", "format": ",.0f"}
+      {
+        "field": "country",
+        "type": "nominal",
+        "title": "Country"
+      },
+      {
+        "field": "trips_num",
+        "type": "quantitative",
+        "title": "Arrivals ('000)",
+        "format": ",.1f"
+      },
+      {
+        "field": "spend_per_trip_num",
+        "type": "quantitative",
+        "title": "Spend per Trip (AUD)",
+        "format": ",.0f"
+      },
+      {
+        "field": "spend_num",
+        "type": "quantitative",
+        "title": "Total Spend ($M)",
+        "format": ",.0f"
+      }
     ]
   },
   "config": {
-    "view": {"stroke": null}
+    "view": {
+      "stroke": null
+    }
   }
 }
