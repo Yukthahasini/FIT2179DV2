@@ -5,10 +5,7 @@
     "fontSize": 16,
     "font": "Georgia",
     "anchor": "start",
-    "color": "#1a4a6b",
-    "subtitle": "Visitor spending has recovered faster than arrivals since 2021",
-    "subtitleFontSize": 13,
-    "subtitleColor": "#666"
+    "color": "#1a4a6b"
   },
   "width": 900,
   "height": 380,
