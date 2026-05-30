@@ -14,7 +14,9 @@
   "height": 320,
   "data": {
     "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/purpose.csv",
-    "format": {"type": "csv"}
+    "format": {
+      "type": "csv"
+    }
   },
   "transform": [
     {
@@ -24,31 +26,199 @@
     {
       "calculate": "toNumber(datum.trips_2025)",
       "as": "trips"
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "sum",
+          "field": "trips",
+          "as": "total_trips"
+        }
+      ]
+    },
+    {
+      "calculate": "round(datum.trips / datum.total_trips * 100) + '%'",
+      "as": "pct_label"
     }
   ],
-  "mark": {"type": "arc", "innerRadius": 90, "outerRadius": 140},
-  "encoding": {
-    "theta": {
-      "field": "trips",
-      "type": "quantitative"
-    },
-    "color": {
-      "field": "purpose_short",
-      "type": "nominal",
-      "title": "Purpose",
-      "scale": {
-        "domain": ["Holiday", "VFR", "Business", "Education", "Employment", "Other"],
-        "range": ["#1f4e79","#ff7f50","#5dade2","#58a55c","#d2b48c","#8c8c8c"]
+  "layer": [
+    {
+      "params": [
+        {
+          "name": "hover_slice",
+          "select": {
+            "type": "point",
+            "fields": [
+              "purpose_short"
+            ],
+            "on": "click"
+          }
+        }
+      ],
+      "mark": {
+        "type": "arc",
+        "innerRadius": 90,
+        "outerRadius": 140
       },
-      "legend": {
-        "titleFontSize": 12,
-        "labelFontSize": 12,
-        "orient": "bottom"
+      "encoding": {
+        "theta": {
+          "field": "trips",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "purpose_short",
+          "type": "nominal",
+          "title": "Purpose",
+          "scale": {
+            "domain": [
+              "Holiday",
+              "VFR",
+              "Business",
+              "Education",
+              "Employment",
+              "Other"
+            ],
+            "range": [
+              "#1f4e79",
+              "#ff7f50",
+              "#5dade2",
+              "#58a55c",
+              "#d2b48c",
+              "#8c8c8c"
+            ]
+          },
+          "legend": {
+            "titleFontSize": 12,
+            "labelFontSize": 12,
+            "orient": "bottom"
+          }
+        },
+        "opacity": {
+          "condition": {
+            "param": "hover_slice",
+            "value": 1
+          },
+          "value": 0.25
+        },
+        "tooltip": [
+          {
+            "field": "purpose_short",
+            "type": "nominal",
+            "title": "Purpose"
+          },
+          {
+            "field": "trips",
+            "type": "quantitative",
+            "title": "Arrivals ('000)",
+            "format": ",.1f"
+          },
+          {
+            "field": "pct_label",
+            "type": "nominal",
+            "title": "Share"
+          }
+        ]
       }
     },
-    "tooltip": [
-      {"field": "purpose_short", "type": "nominal", "title": "Purpose"},
-      {"field": "trips", "type": "quantitative", "title": "Arrivals", "format": ",.1f"}
-    ]
+    {
+      "mark": {
+        "type": "text",
+        "radius": 165,
+        "fontSize": 11,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "theta": {
+          "field": "trips",
+          "type": "quantitative",
+          "stack": true
+        },
+        "text": {
+          "field": "pct_label",
+          "type": "nominal"
+        },
+        "color": {
+          "field": "purpose_short",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Holiday",
+              "VFR",
+              "Business",
+              "Education",
+              "Employment",
+              "Other"
+            ],
+            "range": [
+              "#1f4e79",
+              "#ff7f50",
+              "#5dade2",
+              "#58a55c",
+              "#d2b48c",
+              "#8c8c8c"
+            ]
+          },
+          "legend": null
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 14,
+        "fontWeight": "bold",
+        "color": "#1a4a6b",
+        "align": "center",
+        "baseline": "middle",
+        "dy": -8
+      },
+      "transform": [
+        {
+          "filter": "datum.purpose_short == 'Holiday'"
+        }
+      ],
+      "encoding": {
+        "text": {
+          "value": "Holiday"
+        },
+        "x": {
+          "value": 210
+        },
+        "y": {
+          "value": 160
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "color": "#666",
+        "align": "center",
+        "baseline": "middle",
+        "dy": 10
+      },
+      "transform": [
+        {
+          "filter": "datum.purpose_short == 'Holiday'"
+        }
+      ],
+      "encoding": {
+        "text": {
+          "value": "leads all purposes"
+        },
+        "x": {
+          "value": 210
+        },
+        "y": {
+          "value": 160
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    }
   }
 }
