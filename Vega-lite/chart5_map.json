@@ -14,8 +14,8 @@
  },
 
 
- "width": 420,
- "height": 420,
+ "width": 900,
+ "height": 360,
 
 
  "projection": {
@@ -78,7 +78,7 @@
          "legend": {
            "titleFontSize": 12,
            "labelFontSize": 11,
-           "orient": "right"
+           "orient": "bottom-right"
          }
        },
 
