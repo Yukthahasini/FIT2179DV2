@@ -1,109 +1,248 @@
+
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "International Arrivals by State and Year (2015–2025)",
+    "text": "International Arrivals by State (2015–2025)",
     "fontSize": 16,
     "font": "Georgia",
     "anchor": "start",
-    "color": "#1a4a6b",
-    "subtitle": "The 2020–2021 disruption is visible across all states",
-    "subtitleFontSize": 13,
-    "subtitleColor": "#666"
+    "color": "#1a4a6b"
   },
-  "width": 900,
-  "height": 300,
   "data": {
     "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/state_trend.csv",
-    "format": {"type": "csv"}
+    "format": {
+      "type": "csv"
+    }
   },
   "transform": [
-    {"calculate": "toNumber(datum.year)", "as": "year_num"},
-    {"calculate": "toNumber(datum.NSW)", "as": "NSW_num"},
-    {"calculate": "toNumber(datum.VIC)", "as": "VIC_num"},
-    {"calculate": "toNumber(datum.QLD)", "as": "QLD_num"},
-    {"calculate": "toNumber(datum.WA)", "as": "WA_num"},
-    {"calculate": "toNumber(datum.SA)", "as": "SA_num"},
-    {"calculate": "toNumber(datum.TAS)", "as": "TAS_num"},
-    {"calculate": "toNumber(datum.ACT)", "as": "ACT_num"},
-    {"calculate": "toNumber(datum.NT)", "as": "NT_num"},
     {
-      "fold": ["NSW_num", "VIC_num", "QLD_num", "WA_num", "SA_num", "TAS_num", "ACT_num", "NT_num"],
-      "as": ["state_key", "arrivals"]
+      "calculate": "toNumber(datum.year)",
+      "as": "year_num"
     },
-    {"calculate": "replace(datum.state_key, '_num', '')", "as": "state"},
-    {"calculate": "toString(datum.year_num)", "as": "year_label"},
-    {"calculate": "datum.arrivals / 1000000", "as": "arrivals_millions"},
     {
-      "calculate": "datum.state == 'NSW' || datum.state == 'VIC' || datum.state == 'QLD' ? format(datum.arrivals_millions, '.1f') : ''",
-      "as": "label_text"
+      "calculate": "toNumber(datum.NSW)",
+      "as": "NSW_num"
+    },
+    {
+      "calculate": "toNumber(datum.VIC)",
+      "as": "VIC_num"
+    },
+    {
+      "calculate": "toNumber(datum.QLD)",
+      "as": "QLD_num"
+    },
+    {
+      "calculate": "toNumber(datum.WA)",
+      "as": "WA_num"
+    },
+    {
+      "calculate": "toNumber(datum.SA)",
+      "as": "SA_num"
+    },
+    {
+      "calculate": "toNumber(datum.TAS)",
+      "as": "TAS_num"
+    },
+    {
+      "calculate": "toNumber(datum.ACT)",
+      "as": "ACT_num"
+    },
+    {
+      "calculate": "toNumber(datum.NT)",
+      "as": "NT_num"
+    },
+    {
+      "fold": [
+        "NSW_num",
+        "VIC_num",
+        "QLD_num",
+        "WA_num",
+        "SA_num",
+        "TAS_num",
+        "ACT_num",
+        "NT_num"
+      ],
+      "as": [
+        "state_key",
+        "arrivals"
+      ]
+    },
+    {
+      "calculate": "replace(datum.state_key, '_num', '')",
+      "as": "state"
+    },
+    {
+      "calculate": "datum.arrivals / 1000000",
+      "as": "arrivals_millions"
     }
   ],
-  "layer": [
-    {
-      "mark": {
-        "type": "rect",
-        "stroke": "white",
-        "strokeWidth": 1.5
-      },
-      "encoding": {
-        "x": {
-          "field": "year_label",
-          "type": "ordinal",
-          "title": "Year",
-          "sort": ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"],
-          "axis": {"labelFontSize": 11, "titleFontSize": 12, "labelAngle": 0}
-        },
-        "y": {
-          "field": "state",
-          "type": "nominal",
-          "title": "State",
-          "sort": ["NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"],
-          "axis": {"labelFontSize": 11, "titleFontSize": 12}
-        },
-        "color": {
-          "field": "arrivals_millions",
-          "type": "quantitative",
-          "title": "Arrivals (M)",
-          "scale": {
-            "range": ["#dce9f2", "#bdd7e7", "#6baed6", "#3182bd", "#08519c"],
-            "domain": [0, 4.5]
+  "facet": {
+    "field": "state",
+    "type": "nominal",
+    "sort": [
+      "NSW",
+      "VIC",
+      "QLD",
+      "WA",
+      "SA",
+      "TAS",
+      "ACT",
+      "NT"
+    ],
+    "header": {
+      "titleFontSize": 0,
+      "labelFontSize": 13,
+      "labelFontWeight": "bold",
+      "labelColor": "#1a4a6b"
+    }
+  },
+  "columns": 4,
+  "spec": {
+    "width": 180,
+    "height": 120,
+    "layer": [
+      {
+        "mark": {
+          "type": "area",
+          "line": {
+            "color": "#1a4a6b",
+            "strokeWidth": 2
           },
-          "legend": {
-            "titleFontSize": 11,
-            "labelFontSize": 10,
-            "orient": "right"
+          "color": "#1a4a6b",
+          "opacity": 0.15
+        },
+        "encoding": {
+          "x": {
+            "field": "year_num",
+            "type": "ordinal",
+            "title": null,
+            "axis": {
+              "labelFontSize": 9,
+              "labelAngle": -45,
+              "tickCount": 5,
+              "values": [
+                2015,
+                2017,
+                2019,
+                2021,
+                2023,
+                2025
+              ]
+            }
+          },
+          "y": {
+            "field": "arrivals_millions",
+            "type": "quantitative",
+            "title": "Arrivals (M)",
+            "axis": {
+              "titleFontSize": 9,
+              "labelFontSize": 9,
+              "tickCount": 3
+            }
+          }
+        }
+      },
+      {
+        "mark": {
+          "type": "line",
+          "color": "#1a4a6b",
+          "strokeWidth": 2,
+          "point": {
+            "filled": true,
+            "size": 25,
+            "color": "#1a4a6b"
           }
         },
-        "tooltip": [
-          {"field": "state", "type": "nominal", "title": "State"},
-          {"field": "year_label", "type": "ordinal", "title": "Year"},
-          {"field": "arrivals_millions", "type": "quantitative", "title": "Arrivals (M)", "format": ".2f"}
-        ]
-      }
-    },
-    {
-      "mark": {
-        "type": "text",
-        "fontSize": 8,
-        "fontWeight": "bold",
-        "color": "white"
+        "encoding": {
+          "x": {
+            "field": "year_num",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "arrivals_millions",
+            "type": "quantitative"
+          },
+          "tooltip": [
+            {
+              "field": "state",
+              "type": "nominal",
+              "title": "State"
+            },
+            {
+              "field": "year_num",
+              "type": "ordinal",
+              "title": "Year"
+            },
+            {
+              "field": "arrivals_millions",
+              "type": "quantitative",
+              "title": "Arrivals (M)",
+              "format": ".2f"
+            }
+          ]
+        }
       },
-      "encoding": {
-        "x": {
-          "field": "year_label",
-          "type": "ordinal",
-          "sort": ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"]
+      {
+        "mark": {
+          "type": "point",
+          "filled": true,
+          "size": 60,
+          "color": "#e8703a"
         },
-        "y": {
-          "field": "state",
-          "type": "nominal",
-          "sort": ["NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"]
-        },
-        "text": {"field": "label_text", "type": "nominal"}
+        "transform": [
+          {
+            "window": [
+              {
+                "op": "max",
+                "field": "arrivals_millions",
+                "as": "max_arrivals"
+              }
+            ],
+            "groupby": [
+              "state"
+            ]
+          },
+          {
+            "filter": "datum.arrivals_millions == datum.max_arrivals"
+          }
+        ],
+        "encoding": {
+          "x": {
+            "field": "year_num",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "arrivals_millions",
+            "type": "quantitative"
+          },
+          "tooltip": [
+            {
+              "field": "state",
+              "type": "nominal",
+              "title": "State"
+            },
+            {
+              "field": "year_num",
+              "type": "ordinal",
+              "title": "Peak Year"
+            },
+            {
+              "field": "arrivals_millions",
+              "type": "quantitative",
+              "title": "Peak Arrivals (M)",
+              "format": ".2f"
+            }
+          ]
+        }
       }
-    }
-  ],
+    ]
+  },
   "config": {
-    "view": {"stroke": null}
+    "view": {
+      "stroke": "#e0e0e0"
+    },
+    "facet": {
+      "spacing": 16
+    }
   }
 }
