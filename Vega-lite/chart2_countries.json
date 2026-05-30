@@ -1,3 +1,4 @@
+
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
@@ -14,7 +15,9 @@
   "height": 350,
   "data": {
     "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/countries.csv",
-    "format": {"type": "csv"}
+    "format": {
+      "type": "csv"
+    }
   },
   "transform": [
     {
@@ -25,39 +28,139 @@
       "filter": "datum.trips_num > 0"
     },
     {
-      "window": [{"op": "rank", "as": "rank"}],
-      "sort": [{"field": "trips_num", "order": "descending"}]
+      "window": [
+        {
+          "op": "rank",
+          "as": "rank"
+        }
+      ],
+      "sort": [
+        {
+          "field": "trips_num",
+          "order": "descending"
+        }
+      ]
     },
     {
       "filter": "datum.rank <= 10"
     }
   ],
-  "mark": {"type": "bar", "cornerRadiusEnd": 4},
-  "encoding": {
-    "y": {
-      "field": "country",
-      "type": "nominal",
-      "sort": {"field": "trips_num", "order": "descending"},
-      "title": null,
-      "axis": {"labelFontSize": 12}
+  "layer": [
+    {
+      "params": [
+        {
+          "name": "hover_bar",
+          "select": {
+            "type": "point",
+            "on": "mouseover"
+          }
+        }
+      ],
+      "mark": {
+        "type": "bar",
+        "cornerRadiusEnd": 4
+      },
+      "encoding": {
+        "y": {
+          "field": "country",
+          "type": "nominal",
+          "sort": {
+            "field": "trips_num",
+            "order": "descending"
+          },
+          "title": null,
+          "axis": {
+            "labelFontSize": 12
+          }
+        },
+        "x": {
+          "field": "trips_num",
+          "type": "quantitative",
+          "title": "Arrivals",
+          "axis": {
+            "titleFontSize": 13,
+            "labelFontSize": 12
+          }
+        },
+        "color": {
+          "field": "trips_num",
+          "type": "quantitative",
+          "scale": {
+            "scheme": "blues"
+          },
+          "legend": null
+        },
+        "opacity": {
+          "condition": {
+            "param": "hover_bar",
+            "value": 1
+          },
+          "value": 0.6
+        },
+        "tooltip": [
+          {
+            "field": "country",
+            "type": "nominal",
+            "title": "Country"
+          },
+          {
+            "field": "trips_num",
+            "type": "quantitative",
+            "title": "Arrivals",
+            "format": ",.1f"
+          },
+          {
+            "field": "spend_2025_m",
+            "type": "quantitative",
+            "title": "Spend in Australia ($M)",
+            "format": ",.0f"
+          },
+          {
+            "field": "spend_per_trip_2025",
+            "type": "quantitative",
+            "title": "Spend per Trip ($)",
+            "format": ",.0f"
+          }
+        ]
+      }
     },
-    "x": {
-      "field": "trips_num",
-      "type": "quantitative",
-      "title": "Arrivals",
-      "axis": {"titleFontSize": 13, "labelFontSize": 12}
-    },
-    "color": {
-      "field": "trips_num",
-      "type": "quantitative",
-      "scale": {"scheme": "blues"},
-      "legend": null
-    },
-    "tooltip": [
-      {"field": "country", "type": "nominal", "title": "Country"},
-      {"field": "trips_num", "type": "quantitative", "title": "Arrivals", "format": ",.1f"},
-      {"field": "spend_2025_m", "type": "quantitative", "title": "Spend in Australia ($M)", "format": ",.0f"},
-      {"field": "spend_per_trip_2025", "type": "quantitative", "title": "Spend per Trip ($)", "format": ",.0f"}
-    ]
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 8,
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "fontStyle": "italic",
+        "color": "#e8703a"
+      },
+      "transform": [
+        {
+          "filter": "datum.country == 'New Zealand'"
+        }
+      ],
+      "encoding": {
+        "y": {
+          "field": "country",
+          "type": "nominal",
+          "sort": {
+            "field": "trips_num",
+            "order": "descending"
+          }
+        },
+        "x": {
+          "field": "trips_num",
+          "type": "quantitative"
+        },
+        "text": {
+          "value": "Highest arrivals"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    }
   }
 }
