@@ -72,7 +72,7 @@
         "x": {
           "field": "trips_num",
           "type": "quantitative",
-          "title": "Arrivals ('000)",
+          "title": "Arrivals",
           "axis": {
             "titleFontSize": 13,
             "labelFontSize": 12
@@ -97,7 +97,7 @@
           {
             "field": "trips_num",
             "type": "quantitative",
-            "title": "Arrivals ('000)",
+            "title": "Arrivals",
             "format": ",.1f"
           },
           {
