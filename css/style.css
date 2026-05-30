@@ -304,6 +304,15 @@ nav a:hover {
   gap: 28px;
   align-items: start;
 }
+.two-column .chart-container {
+  min-height: 760px;
+  display: flex;
+  flex-direction: column;
+}
+
+.two-column .chart-note {
+  margin-top: auto;
+}
 
 /* ════════════════════════════════════════
    DIVIDER
