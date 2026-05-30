@@ -488,3 +488,57 @@ footer .footer-bottom {
     width: 100%;
   }
 }
+
+/* TOURISM BOARD */
+
+.tourism-board {
+    background: rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 28px 32px;
+    width: 420px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border-left: 5px solid #f47a3c;
+}
+
+.board-title {
+    color: #ffffff;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    font-family: 'Inter', sans-serif;
+}
+
+.board-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    font-family: 'Courier New', monospace;
+}
+
+.board-row:last-child {
+    border-bottom: none;
+}
+
+.flight {
+    color: #8fc7f0;
+    font-weight: bold;
+    width: 90px;
+}
+
+.country {
+    color: #ffffff;
+    flex: 1;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.status {
+    color: #7CFC9A;
+    font-weight: bold;
+    width: 90px;
+    text-align: right;
+}
