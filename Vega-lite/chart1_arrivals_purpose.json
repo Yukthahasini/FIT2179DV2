@@ -11,13 +11,25 @@
   "height": 350,
   "data": {
     "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/arrivals_trend.csv",
-    "format": {"type": "csv"}
+    "format": {
+      "type": "csv"
+    }
   },
   "transform": [
-    {"filter": "datum.year >= 2015 && datum.year <= 2025"},
     {
-      "fold": ["holiday", "vfr", "business", "education"],
-      "as": ["purpose", "arrivals"]
+      "filter": "datum.year >= 2015 && datum.year <= 2025"
+    },
+    {
+      "fold": [
+        "holiday",
+        "vfr",
+        "business",
+        "education"
+      ],
+      "as": [
+        "purpose",
+        "arrivals"
+      ]
     },
     {
       "calculate": "datum.purpose === 'holiday' ? 'Holiday' : datum.purpose === 'vfr' ? 'Visiting Friends & Relatives' : datum.purpose === 'business' ? 'Business' : 'Education'",
@@ -28,63 +40,110 @@
       "as": "arrivals_millions"
     }
   ],
-  "mark": {
-    "type": "line",
-    "point": true,
-    "strokeWidth": 2.5
-  },
-  "encoding": {
-    "x": {
-      "field": "year",
-      "type": "ordinal",
-      "title": "Year",
-      "axis": {
-        "labelFontSize": 12,
-        "titleFontSize": 13
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "point": true,
+        "strokeWidth": 2.5
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "title": "Year",
+          "axis": {
+            "labelFontSize": 12,
+            "titleFontSize": 13
+          }
+        },
+        "y": {
+          "field": "arrivals_millions",
+          "type": "quantitative",
+          "title": "Arrivals (Millions)",
+          "axis": {
+            "labelFontSize": 12,
+            "titleFontSize": 13
+          }
+        },
+        "color": {
+          "field": "purpose_label",
+          "type": "nominal",
+          "title": "Purpose",
+          "scale": {
+            "domain": [
+              "Holiday",
+              "Visiting Friends & Relatives",
+              "Business",
+              "Education"
+            ],
+            "range": [
+              "#1a4a6b",
+              "#e8703a",
+              "#6db3d4",
+              "#4a8a4a"
+            ]
+          },
+          "legend": {
+            "orient": "right",
+            "titleFontSize": 12,
+            "labelFontSize": 12
+          }
+        },
+        "tooltip": [
+          {
+            "field": "year",
+            "type": "ordinal",
+            "title": "Year"
+          },
+          {
+            "field": "purpose_label",
+            "type": "nominal",
+            "title": "Purpose"
+          },
+          {
+            "field": "arrivals_millions",
+            "type": "quantitative",
+            "title": "Arrivals (M)",
+            "format": ".2f"
+          }
+        ]
       }
     },
-    "y": {
-      "field": "arrivals_millions",
-      "type": "quantitative",
-      "title": "Arrivals (Millions)",
-      "axis": {
-        "labelFontSize": 12,
-        "titleFontSize": 13
-      }
-    },
-    "color": {
-      "field": "purpose_label",
-      "type": "nominal",
-      "title": "Purpose",
-      "scale": {
-        "domain": ["Holiday", "Visiting Friends & Relatives", "Business", "Education"],
-        "range": ["#1a4a6b", "#e8703a", "#6db3d4", "#4a8a4a"]
+    {
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "fontSize": 11,
+        "fontStyle": "italic",
+        "fontWeight": "bold",
+        "color": "#1a4a6b"
       },
-      "legend": {
-        "orient": "right",
-        "titleFontSize": 12,
-        "labelFontSize": 12
-      }
-    },
-    "tooltip": [
-      {
-        "field": "year",
-        "type": "ordinal",
-        "title": "Year"
+      "data": {
+        "values": [
+          {
+            "x": "2019",
+            "y": 4.8,
+            "label": "Holiday dominates throughout"
+          }
+        ]
       },
-      {
-        "field": "purpose_label",
-        "type": "nominal",
-        "title": "Purpose"
-      },
-      {
-        "field": "arrivals_millions",
-        "type": "quantitative",
-        "title": "Arrivals (M)",
-        "format": ".2f"
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label",
+          "type": "nominal"
+        }
       }
-    ]
-  },
+    }
+  ],
   "config": {
     "view": {
       "stroke": null
