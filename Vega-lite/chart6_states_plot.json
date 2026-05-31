@@ -1,271 +1,192 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Visitor Arrivals by State (2024–2025)",
+    "text": "State Rankings by International Arrivals: 2015, 2019 and 2025",
     "fontSize": 16,
     "font": "Georgia",
     "anchor": "start",
     "color": "#1a4a6b"
   },
   "width": 900,
-  "height": 360,
+  "height": 380,
   "data": {
-    "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/states.csv",
-    "format": {
-      "type": "csv"
-    }
+    "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/state_trend.csv",
+    "format": {"type": "csv"}
   },
   "transform": [
+    {"calculate": "toNumber(datum.year)", "as": "year_num"},
+    {"filter": "datum.year_num == 2015 || datum.year_num == 2019 || datum.year_num == 2025"},
+    {"calculate": "toNumber(datum.NSW)", "as": "NSW_num"},
+    {"calculate": "toNumber(datum.VIC)", "as": "VIC_num"},
+    {"calculate": "toNumber(datum.QLD)", "as": "QLD_num"},
+    {"calculate": "toNumber(datum.WA)", "as": "WA_num"},
+    {"calculate": "toNumber(datum.SA)", "as": "SA_num"},
+    {"calculate": "toNumber(datum.TAS)", "as": "TAS_num"},
+    {"calculate": "toNumber(datum.NT)", "as": "NT_num"},
+    {"calculate": "toNumber(datum.ACT)", "as": "ACT_num"},
     {
-      "calculate": "toNumber(datum.trips_2024)",
-      "as": "trips_2024_num"
+      "fold": ["NSW_num", "VIC_num", "QLD_num", "WA_num", "SA_num", "TAS_num", "NT_num", "ACT_num"],
+      "as": ["state_key", "arrivals"]
     },
     {
-      "calculate": "toNumber(datum.trips_2025)",
-      "as": "trips_2025_num"
+      "calculate": "replace(datum.state_key, '_num', '')",
+      "as": "state"
     },
     {
-      "calculate": "datum.trips_2025_num - datum.trips_2024_num",
-      "as": "change"
+      "window": [{"op": "rank", "as": "rank"}],
+      "sort": [{"field": "arrivals", "order": "descending"}],
+      "groupby": ["year_num"]
+    },
+    {
+      "calculate": "toString(datum.year_num)",
+      "as": "year_label"
+    },
+    {
+      "calculate": "datum.state == 'QLD' || datum.state == 'NT' ? 1 : 0.35",
+      "as": "line_opacity"
     }
   ],
   "layer": [
     {
       "mark": {
-        "type": "rule",
-        "color": "#d0d0d0",
-        "strokeWidth": 4
+        "type": "line",
+        "strokeWidth": 3,
+        "interpolate": "monotone"
       },
       "encoding": {
-        "y": {
-          "field": "state_abbr",
-          "type": "nominal",
-          "sort": {
-            "field": "trips_2025_num",
-            "order": "descending"
-          },
-          "title": null,
-          "axis": {
-            "labelFontSize": 13,
-            "labelFontWeight": "bold"
-          }
-        },
         "x": {
-          "field": "trips_2024_num",
-          "type": "quantitative",
-          "title": "Arrivals",
-          "axis": {
-            "values": [
-              0,
-              1000,
-              2000,
-              3000,
-              4000
-            ],
-            "labelFontSize": 12,
-            "titleFontSize": 13,
-            "grid": true
-          }
-        },
-        "x2": {
-          "field": "trips_2025_num"
-        }
-      }
-    },
-    {
-      "transform": [
-        {
-          "calculate": "'2024'",
-          "as": "year"
-        }
-      ],
-      "mark": {
-        "type": "point",
-        "filled": true,
-        "size": 150,
-        "stroke": "white",
-        "strokeWidth": 1.5
-      },
-      "encoding": {
-        "y": {
-          "field": "state_abbr",
-          "type": "nominal",
-          "sort": {
-            "field": "trips_2025_num",
-            "order": "descending"
-          },
-          "title": null
-        },
-        "x": {
-          "field": "trips_2024_num",
-          "type": "quantitative"
-        },
-        "color": {
-          "field": "year",
-          "type": "nominal",
+          "field": "year_label",
+          "type": "ordinal",
           "title": "Year",
-          "scale": {
-            "domain": [
-              "2024",
-              "2025"
-            ],
-            "range": [
-              "#9ecae1",
-              "#1a4a6b"
-            ]
-          },
-          "legend": {
-            "orient": "right",
-            "titleFontSize": 12,
-            "labelFontSize": 11
+          "sort": ["2015", "2019", "2025"],
+          "axis": {"labelFontSize": 13, "titleFontSize": 13}
+        },
+        "y": {
+          "field": "rank",
+          "type": "ordinal",
+          "title": "Rank",
+          "sort": "ascending",
+          "axis": {
+            "titleFontSize": 13,
+            "labelFontSize": 12,
+            "values": [1, 2, 3, 4, 5, 6, 7, 8]
           }
         },
-        "tooltip": [
-          {
-            "field": "state",
-            "type": "nominal",
-            "title": "State"
+        "color": {
+          "field": "state",
+          "type": "nominal",
+          "scale": {
+            "domain": ["NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"],
+            "range": ["#0a2d4a", "#c94a0a", "#1a7abf", "#1e6e1e", "#8a6a00", "#5a0a8a", "#b01010", "#c47800"]
           },
-          {
-            "field": "trips_2024_num",
-            "type": "quantitative",
-            "title": "Arrivals 2024",
-            "format": ",.1f"
-          }
-        ]
+          "legend": null
+        },
+        "opacity": {
+          "field": "line_opacity",
+          "type": "quantitative",
+          "legend": null
+        }
       }
     },
     {
-      "transform": [
-        {
-          "calculate": "'2025'",
-          "as": "year"
-        }
-      ],
       "mark": {
         "type": "point",
         "filled": true,
-        "size": 180,
-        "stroke": "white",
-        "strokeWidth": 1.5
+        "size": 80,
+        "opacity": 1
       },
       "encoding": {
-        "y": {
-          "field": "state_abbr",
-          "type": "nominal",
-          "sort": {
-            "field": "trips_2025_num",
-            "order": "descending"
-          },
-          "title": null
-        },
         "x": {
-          "field": "trips_2025_num",
-          "type": "quantitative"
+          "field": "year_label",
+          "type": "ordinal",
+          "sort": ["2015", "2019", "2025"]
+        },
+        "y": {
+          "field": "rank",
+          "type": "ordinal",
+          "sort": "ascending"
         },
         "color": {
-          "field": "year",
+          "field": "state",
           "type": "nominal",
           "scale": {
-            "domain": [
-              "2024",
-              "2025"
-            ],
-            "range": [
-              "#9ecae1",
-              "#1a4a6b"
-            ]
+            "domain": ["NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"],
+            "range": ["#0a2d4a", "#c94a0a", "#1a7abf", "#1e6e1e", "#8a6a00", "#5a0a8a", "#b01010", "#c47800"]
           },
           "legend": null
         },
         "tooltip": [
-          {
-            "field": "state",
-            "type": "nominal",
-            "title": "State"
-          },
-          {
-            "field": "trips_2025_num",
-            "type": "quantitative",
-            "title": "Arrivals 2025",
-            "format": ",.1f"
-          },
-          {
-            "field": "change",
-            "type": "quantitative",
-            "title": "Increase from 2024",
-            "format": ",.1f"
-          }
+          {"field": "state", "type": "nominal", "title": "State"},
+          {"field": "year_label", "type": "ordinal", "title": "Year"},
+          {"field": "rank", "type": "ordinal", "title": "Rank"},
+          {"field": "arrivals", "type": "quantitative", "title": "Arrivals", "format": ",.0f"}
         ]
       }
     },
     {
       "mark": {
         "type": "text",
-        "align": "left",
-        "dx": 10,
         "fontSize": 11,
-        "color": "#444"
+        "fontWeight": "bold",
+        "dx": -28,
+        "align": "right"
       },
+      "transform": [{"filter": "datum.year_label == '2015'"}],
       "encoding": {
-        "y": {
-          "field": "state_abbr",
-          "type": "nominal",
-          "sort": {
-            "field": "trips_2025_num",
-            "order": "descending"
-          },
-          "title": null
-        },
         "x": {
-          "field": "trips_2025_num",
-          "type": "quantitative"
+          "field": "year_label",
+          "type": "ordinal",
+          "sort": ["2015", "2019", "2025"]
         },
-        "text": {
-          "field": "trips_2025_num",
-          "type": "quantitative",
-          "format": ",.0f"
+        "y": {
+          "field": "rank",
+          "type": "ordinal",
+          "sort": "ascending"
+        },
+        "text": {"field": "state"},
+        "color": {
+          "field": "state",
+          "type": "nominal",
+          "scale": {
+            "domain": ["NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"],
+            "range": ["#0a2d4a", "#c94a0a", "#1a7abf", "#1e6e1e", "#8a6a00", "#5a0a8a", "#b01010", "#c47800"]
+          },
+          "legend": null
         }
       }
     },
     {
       "mark": {
         "type": "text",
-        "align": "left",
-        "dx": 14,
-        "dy": -14,
         "fontSize": 11,
         "fontWeight": "bold",
-        "fontStyle": "italic",
-        "color": "#1a4a6b"
+        "dx": 28,
+        "align": "left"
       },
-      "transform": [
-        {
-          "filter": "datum.state_abbr === 'NSW'"
-        }
-      ],
+      "transform": [{"filter": "datum.year_label == '2025'"}],
       "encoding": {
-        "y": {
-          "field": "state_abbr",
-          "type": "nominal",
-          "sort": {
-            "field": "trips_2025_num",
-            "order": "descending"
-          }
-        },
         "x": {
-          "field": "trips_2025_num",
-          "type": "quantitative"
+          "field": "year_label",
+          "type": "ordinal",
+          "sort": ["2015", "2019", "2025"]
         },
-        "text": {
-          "value": "NSW saw the largest increase"
+        "y": {
+          "field": "rank",
+          "type": "ordinal",
+          "sort": "ascending"
+        },
+        "text": {"field": "state"},
+        "color": {
+          "field": "state",
+          "type": "nominal",
+          "scale": {
+            "domain": ["NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"],
+            "range": ["#0a2d4a", "#c94a0a", "#1a7abf", "#1e6e1e", "#8a6a00", "#5a0a8a", "#b01010", "#c47800"]
+          },
+          "legend": null
         }
       }
     }
   ],
-  "config": {
-    "view": {
-      "stroke": null
-    }
-  }
+  "config": {"view": {"stroke": null}}
 }
