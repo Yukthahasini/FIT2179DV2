@@ -11,7 +11,9 @@
   "height": 360,
   "data": {
     "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/countries.csv",
-    "format": {"type": "csv"}
+    "format": {
+      "type": "csv"
+    }
   },
   "transform": [
     {
@@ -30,78 +32,155 @@
       "filter": "datum.trips_num > 0"
     }
   ],
-  "mark": {
-    "type": "point",
-    "filled": true,
-    "opacity": 0.85,
-    "stroke": "white",
-    "strokeWidth": 1
-  },
-  "encoding": {
-    "x": {
-      "field": "trips_num",
-      "type": "quantitative",
-      "title": "Arrivals ('000)",
-      "axis": {
-        "titleFontSize": 12,
-        "labelFontSize": 11
+  "layer": [
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "opacity": 0.85,
+        "stroke": "white",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "x": {
+          "field": "trips_num",
+          "type": "quantitative",
+          "title": "Arrivals ('000)",
+          "axis": {
+            "titleFontSize": 12,
+            "labelFontSize": 11
+          }
+        },
+        "y": {
+          "field": "spend_per_trip_num",
+          "type": "quantitative",
+          "title": "Spend per Trip (AUD)",
+          "axis": {
+            "titleFontSize": 12,
+            "labelFontSize": 11,
+            "format": ",.0f"
+          }
+        },
+        "size": {
+          "field": "spend_num",
+          "type": "quantitative",
+          "title": "Total Spend ($M)",
+          "scale": {
+            "domain": [
+              0,
+              12000
+            ],
+            "range": [
+              40,
+              1200
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "titleFontSize": 11,
+            "labelFontSize": 10,
+            "values": [
+              0,
+              2000,
+              4000,
+              6000,
+              8000,
+              10000,
+              12000
+            ]
+          }
+        },
+        "color": {
+          "value": "#6baed6"
+        },
+        "tooltip": [
+          {
+            "field": "country",
+            "type": "nominal",
+            "title": "Country"
+          },
+          {
+            "field": "trips_num",
+            "type": "quantitative",
+            "title": "Arrivals ('000)",
+            "format": ",.1f"
+          },
+          {
+            "field": "spend_per_trip_num",
+            "type": "quantitative",
+            "title": "Spend per Trip (AUD)",
+            "format": ",.0f"
+          },
+          {
+            "field": "spend_num",
+            "type": "quantitative",
+            "title": "Total Spend ($M)",
+            "format": ",.0f"
+          }
+        ]
       }
     },
-    "y": {
-      "field": "spend_per_trip_num",
-      "type": "quantitative",
-      "title": "Spend per Trip (AUD)",
-      "axis": {
-        "titleFontSize": 12,
-        "labelFontSize": 11,
-        "format": ",.0f"
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 14,
+        "dy": -8,
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "fontStyle": "italic",
+        "color": "#1a4a6b"
+      },
+      "transform": [
+        {
+          "filter": "datum.country === 'China'"
+        }
+      ],
+      "encoding": {
+        "x": {
+          "field": "trips_num",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "spend_per_trip_num",
+          "type": "quantitative"
+        },
+        "text": {
+          "value": "Highest spend per trip"
+        }
       }
     },
-"size": {
-  "field": "spend_num",
-  "type": "quantitative",
-  "title": "Total Spend ($M)",
-  "scale": {
-    "domain": [0, 12000],
-    "range": [40, 1200]
-  },
-  "legend": {
-    "orient": "bottom",
-    "titleFontSize": 11,
-    "labelFontSize": 10,
-    "values": [0, 2000, 4000, 6000, 8000, 10000, 12000]
-  }
-
-    },
-    "color": {
-      "value": "#6baed6"
-    },
-    "tooltip": [
-      {
-        "field": "country",
-        "type": "nominal",
-        "title": "Country"
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 14,
+        "dy": -8,
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "fontStyle": "italic",
+        "color": "#e8703a"
       },
-      {
-        "field": "trips_num",
-        "type": "quantitative",
-        "title": "Arrivals ('000)",
-        "format": ",.1f"
-      },
-      {
-        "field": "spend_per_trip_num",
-        "type": "quantitative",
-        "title": "Spend per Trip (AUD)",
-        "format": ",.0f"
-      },
-      {
-        "field": "spend_num",
-        "type": "quantitative",
-        "title": "Total Spend ($M)",
-        "format": ",.0f"
+      "transform": [
+        {
+          "filter": "datum.country === 'New Zealand'"
+        }
+      ],
+      "encoding": {
+        "x": {
+          "field": "trips_num",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "spend_per_trip_num",
+          "type": "quantitative"
+        },
+        "text": {
+          "value": "Largest visitor market"
+        }
       }
-    ]
-  },
+    }
+  ],
   "config": {
     "view": {
       "stroke": null
