@@ -1,5 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
   "title": {
     "text": "Total Arrivals vs Total Visitor Spend (2015–2025)",
     "fontSize": 16,
@@ -7,14 +8,17 @@
     "anchor": "start",
     "color": "#1a4a6b"
   },
+
   "width": 900,
   "height": 380,
+
   "data": {
     "url": "https://raw.githubusercontent.com/Yukthahasini/FIT2179DV2/main/data/arrivals_spend.csv",
     "format": {
       "type": "csv"
     }
   },
+
   "transform": [
     {
       "calculate": "toNumber(datum.year)",
@@ -33,7 +37,9 @@
       "as": "year_label"
     }
   ],
+
   "layer": [
+
     {
       "mark": {
         "type": "bar",
@@ -42,11 +48,13 @@
         "color": "#6db3d4",
         "opacity": 0.55
       },
+
       "encoding": {
         "x": {
           "field": "year_label",
           "type": "ordinal",
           "title": "Year",
+
           "sort": [
             "2015",
             "2016",
@@ -60,21 +68,25 @@
             "2024",
             "2025"
           ],
+
           "axis": {
             "labelFontSize": 12,
             "titleFontSize": 13
           }
         },
+
         "y": {
           "field": "arrivals_millions",
           "type": "quantitative",
           "title": "Total Arrivals (Millions)",
+
           "axis": {
             "titleFontSize": 13,
             "labelFontSize": 12,
             "titleColor": "#6db3d4"
           }
         },
+
         "tooltip": [
           {
             "field": "year_label",
@@ -90,11 +102,13 @@
         ]
       }
     },
+
     {
       "mark": {
         "type": "line",
         "strokeWidth": 3,
         "color": "#e8703a",
+
         "point": {
           "filled": true,
           "size": 75,
@@ -103,10 +117,12 @@
           "strokeWidth": 1.2
         }
       },
+
       "encoding": {
         "x": {
           "field": "year_label",
           "type": "ordinal",
+
           "sort": [
             "2015",
             "2016",
@@ -121,16 +137,19 @@
             "2025"
           ]
         },
+
         "y": {
           "field": "spend_billions",
           "type": "quantitative",
           "title": "Total Visitor Spend ($B)",
+
           "axis": {
             "titleFontSize": 13,
             "labelFontSize": 12,
             "titleColor": "#e8703a"
           }
         },
+
         "tooltip": [
           {
             "field": "year_label",
@@ -146,80 +165,49 @@
         ]
       }
     },
+
     {
       "mark": {
         "type": "text",
-        "align": "center",
-        "fontSize": 11,
+        "align": "right",
+        "fontSize": 12,
         "fontStyle": "italic",
         "fontWeight": "bold",
-        "color": "#e8703a",
-        "dy": -12
+        "color": "#e8703a"
       },
-      "data": {
-        "values": [
-          {
-            "x": "2025",
-            "y": 39,
-            "label": "Spend hits record $39.2B"
-          }
-        ]
-      },
+
       "encoding": {
-        "x": {
-          "field": "x",
-          "type": "ordinal"
-        },
-        "y": {
-          "field": "y",
-          "type": "quantitative"
-        },
-        "text": {
-          "field": "label",
-          "type": "nominal"
-        }
+        "x": {"value": 835},
+        "y": {"value": 25},
+        "text": {"value": "Spend reaches $39.2B in 2025"}
       }
     },
+
     {
       "mark": {
         "type": "text",
-        "align": "center",
-        "fontSize": 11,
+        "align": "right",
+        "fontSize": 12,
         "fontStyle": "italic",
         "fontWeight": "bold",
-        "color": "#6db3d4",
-        "dy": 16
+        "color": "#6db3d4"
       },
-      "data": {
-        "values": [
-          {
-            "x": "2025",
-            "y": 39,
-            "label": "8.9M arrivals in 2025"
-          }
-        ]
-      },
+
       "encoding": {
-        "x": {
-          "field": "x",
-          "type": "ordinal"
-        },
-        "y": {
-          "field": "y",
-          "type": "quantitative"
-        },
-        "text": {
-          "field": "label",
-          "type": "nominal"
-        }
+        "x": {"value": 835},
+        "y": {"value": 48},
+        "text": {"value": "Arrivals recover to 8.9M"}
       }
     }
+
   ],
+
   "resolve": {
     "scale": {
       "y": "independent"
     }
   },
+
   "config": {
     "view": {
       "stroke": null
